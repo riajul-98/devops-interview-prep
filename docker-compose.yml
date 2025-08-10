@@ -1,0 +1,21 @@
+version: '3.8'
+
+services:
+  devops-ip:
+    build: .
+    image: devops-interview-prep:latest
+    container_name: devops-interview-prep
+    stdin_open: true
+    tty: true
+    volumes:
+      # Mount questions directory for easy updates
+      - ./questions:/app/questions:ro
+      # Optional: mount for persistent data/logs
+      - devops-ip-data:/app/data
+    environment:
+      - PYTHONUNBUFFERED=1
+    # Override default command for interactive use
+    command: bash
+
+volumes:
+  devops-ip-data:
