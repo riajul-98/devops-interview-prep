@@ -1,4 +1,4 @@
-# 🚀 DevOps Interview Prep - Master Your Next DevOps Interview
+# DevOps Interview Prep Tool
 
 An interactive CLI tool designed to help you ace your DevOps interviews with real-world scenario-based questions covering all essential topics.
 
