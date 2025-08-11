@@ -2,28 +2,49 @@ FROM python:3.11-slim
 
 LABEL maintainer="moabukar"
 LABEL description="DevOps Interview Prep CLI - Master Your Next DevOps Interview"
-LABEL version="1.0.0"
+LABEL version="1.1.0"
+LABEL org.opencontainers.image.source="https://github.com/moabukar/devops-interview-prep"
+LABEL org.opencontainers.image.documentation="https://github.com/moabukar/devops-interview-prep/blob/main/README.md"
+LABEL org.opencontainers.image.licenses="MIT"
+
+ENV PYTHONUNBUFFERED=1 \
+    PYTHONDONTWRITEBYTECODE=1 \
+    PIP_NO_CACHE_DIR=1 \
+    PIP_DISABLE_PIP_VERSION_CHECK=1
 
 WORKDIR /app
 
 RUN apt-get update && apt-get install -y \
     --no-install-recommends \
     curl \
-    && rm -rf /var/lib/apt/lists/*
+    git \
+    && rm -rf /var/lib/apt/lists/* \
+    && apt-get clean
 
-COPY requirements.txt .
+RUN useradd --create-home --shell /bin/bash --uid 1000 devops-interviewer
+
+# copy requirements first for better Docker layer caching
+COPY requirements.txt requirements-dev.txt ./
 
 RUN pip install --no-cache-dir --upgrade pip && \
     pip install --no-cache-dir -r requirements.txt
 
-COPY . .
+COPY src/ src/
+COPY data/ data/
+COPY pyproject.toml setup.py MANIFEST.in ./
+COPY README.md LICENSE CONTRIBUTING.md ./
 
 RUN pip install --no-cache-dir -e .
 
-RUN useradd --create-home --shell /bin/bash devops-interviewer && \
-    chown -R devops-interviewer:devops-interviewer /app
+RUN mkdir -p /home/devops-interviewer/.devops-ip && \
+    chown -R devops-interviewer:devops-interviewer /app /home/devops-interviewer
 
 USER devops-interviewer
+
+WORKDIR /home/devops-interviewer
+
+HEALTHCHECK --interval=30s --timeout=10s --start-period=5s --retries=3 \
+    CMD devops-ip --version || exit 1
 
 ENTRYPOINT ["devops-ip"]
 CMD ["--help"]

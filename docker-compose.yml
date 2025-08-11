@@ -2,20 +2,62 @@ version: '3.8'
 
 services:
   devops-ip:
-    build: .
+    build:
+      context: .
+      dockerfile: Dockerfile
     image: devops-interview-prep:latest
-    container_name: devops-interview-prep
-    stdin_open: true
-    tty: true
+    container_name: devops-ip-cli
     volumes:
-      # Mount questions directory for easy updates
-      - ./questions:/app/questions:ro
-      # Optional: mount for persistent data/logs
-      - devops-ip-data:/app/data
+      # Mount progress data to persist between runs
+      - devops-ip-data:/home/devops-interviewer/.devops-ip
+      # Mount source for development (optional)
+      - ./src:/app/src:ro
+      - ./data:/app/data:ro
     environment:
       - PYTHONUNBUFFERED=1
-    # Override default command for interactive use
-    command: bash
+    # Interactive mode for CLI usage
+    stdin_open: true
+    tty: true
+    # Override default command for interactive session
+    command: ["practice", "aws", "-c", "3"]
+
+  # Development service with source mounted
+  devops-ip-dev:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      target: builder
+    image: devops-interview-prep:dev
+    container_name: devops-ip-dev
+    volumes:
+      - .:/app
+      - devops-ip-dev-data:/home/devops-interviewer/.devops-ip
+    environment:
+      - PYTHONUNBUFFERED=1
+      - PYTHONDONTWRITEBYTECODE=1
+    stdin_open: true
+    tty: true
+    command: ["--help"]
+
+  # Testing service
+  devops-ip-test:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: devops-interview-prep:test
+    container_name: devops-ip-test
+    volumes:
+      - .:/app
+    environment:
+      - PYTHONUNBUFFERED=1
+    command: ["python", "-m", "pytest", "tests/", "-v"]
 
 volumes:
   devops-ip-data:
+    driver: local
+  devops-ip-dev-data:
+    driver: local
+
+networks:
+  default:
+    name: devops-ip-network

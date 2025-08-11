@@ -1,0 +1,18 @@
+{
+  "questions": [
+    {
+      "id": "test-001",
+      "topic": "AWS",
+      "difficulty": "easy",
+      "question": "What does S3 stand for?",
+      "options": [
+        "Simple Storage Service",
+        "Secure Storage System",
+        "Scalable Storage Solution",
+        "Standard Storage Service"
+      ],
+      "correct_answer": 1,
+      "explanation": "S3 stands for Simple Storage Service, Amazon's object storage service."
+    }
+  ]
+}

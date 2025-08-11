@@ -1,0 +1,1831 @@
+{
+    "questions": [
+      {
+        "id": "aws-001",
+        "topic": "aws",
+        "difficulty": "easy",
+        "question": "Which AWS service provides object storage?",
+        "options": [
+          "EC2",
+          "S3",
+          "RDS",
+          "Lambda"
+        ],
+        "correct_answer": 2,
+        "explanation": "Amazon S3 (Simple Storage Service) is AWS's object storage service that offers industry-leading scalability, data availability, security, and performance."
+      },
+      {
+        "id": "aws-002",
+        "topic": "aws",
+        "difficulty": "medium",
+        "question": "What is the best practice for storing sensitive configuration data in AWS?",
+        "options": [
+          "Store in EC2 user data",
+          "Hardcode in application",
+          "Use AWS Systems Manager Parameter Store or Secrets Manager",
+          "Store in S3 bucket"
+        ],
+        "correct_answer": 3,
+        "explanation": "AWS Systems Manager Parameter Store and Secrets Manager are designed specifically for storing sensitive configuration data securely with encryption and access controls.",
+        "scenario": "You're deploying a web application that needs database credentials and API keys."
+      },
+      {
+        "id": "aws-003",
+        "topic": "aws",
+        "difficulty": "hard",
+        "question": "Your application running on EC2 is experiencing high latency when accessing S3. What should you investigate first?",
+        "options": [
+          "EC2 instance type",
+          "S3 bucket region vs EC2 region",
+          "Application code efficiency",
+          "Network ACLs"
+        ],
+        "correct_answer": 2,
+        "explanation": "Cross-region data transfer introduces significant latency. S3 buckets and EC2 instances should be in the same region for optimal performance.",
+        "scenario": "Your web application loads images from S3, but users are reporting slow page load times."
+      },
+      {
+        "id": "k8s-001",
+        "topic": "kubernetes",
+        "difficulty": "easy",
+        "question": "What is a Pod in Kubernetes?",
+        "options": [
+          "A collection of nodes",
+          "The smallest deployable unit that contains one or more containers",
+          "A type of service",
+          "A configuration file"
+        ],
+        "correct_answer": 2,
+        "explanation": "A Pod is the smallest and simplest unit in the Kubernetes object model that represents a set of running containers on your cluster."
+      },
+      {
+        "id": "k8s-002",
+        "topic": "kubernetes",
+        "difficulty": "medium",
+        "question": "How do you expose a deployment to external traffic?",
+        "options": [
+          "Create a Pod",
+          "Create a Service with type LoadBalancer or NodePort",
+          "Create a ConfigMap",
+          "Create a Secret"
+        ],
+        "correct_answer": 2,
+        "explanation": "Services with type LoadBalancer or NodePort expose pods to external traffic. Ingress controllers are another option for HTTP/HTTPS traffic.",
+        "scenario": "You have a web application deployment running in your cluster that needs to be accessible from the internet."
+      },
+      {
+        "id": "k8s-003",
+        "topic": "kubernetes",
+        "difficulty": "hard",
+        "question": "Your pods are being evicted with 'disk pressure' errors. What's the most likely cause?",
+        "options": [
+          "Insufficient CPU resources",
+          "Insufficient memory resources",
+          "Node running out of disk space",
+          "Network connectivity issues"
+        ],
+        "correct_answer": 3,
+        "explanation": "Disk pressure occurs when a node's available disk space falls below a threshold. This triggers pod eviction to prevent node failure.",
+        "scenario": "You notice several pods in your application are being terminated unexpectedly with eviction events."
+      },
+      {
+        "id": "docker-001",
+        "topic": "docker",
+        "difficulty": "easy",
+        "question": "What command creates and starts a new container?",
+        "options": [
+          "docker create",
+          "docker start",
+          "docker run",
+          "docker exec"
+        ],
+        "correct_answer": 3,
+        "explanation": "The 'docker run' command creates a new container from an image and starts it. It combines 'docker create' and 'docker start'."
+      },
+      {
+        "id": "docker-002",
+        "topic": "docker",
+        "difficulty": "medium",
+        "question": "How do you persist data beyond a container's lifecycle?",
+        "options": [
+          "Store data in the container filesystem",
+          "Use volumes or bind mounts",
+          "Copy files after container stops",
+          "Use environment variables"
+        ],
+        "correct_answer": 2,
+        "explanation": "Volumes and bind mounts allow data to persist beyond the container's lifecycle. Volumes are managed by Docker, while bind mounts reference host filesystem paths.",
+        "scenario": "You need to ensure database data survives container restarts and updates."
+      },
+      {
+        "id": "docker-003",
+        "topic": "docker",
+        "difficulty": "hard",
+        "question": "Your Docker build is slow and creates large images. What optimization should you prioritize?",
+        "options": [
+          "Use smaller base images and multi-stage builds",
+          "Increase build memory",
+          "Use faster storage",
+          "Build on more powerful hardware"
+        ],
+        "correct_answer": 1,
+        "explanation": "Using smaller base images (like Alpine) and multi-stage builds dramatically reduces image size and build time by eliminating unnecessary dependencies and intermediate layers.",
+        "scenario": "Your Node.js application Docker image is 2GB and takes 15 minutes to build."
+      },
+      {
+        "id": "linux-001",
+        "topic": "linux",
+        "difficulty": "easy",
+        "question": "Which command shows running processes?",
+        "options": [
+          "ls",
+          "ps",
+          "cd",
+          "cp"
+        ],
+        "correct_answer": 2,
+        "explanation": "The 'ps' command displays information about running processes. Common options include 'ps aux' for detailed process information."
+      },
+      {
+        "id": "linux-002",
+        "topic": "linux",
+        "difficulty": "medium",
+        "question": "How do you find files modified in the last 7 days?",
+        "options": [
+          "find . -mtime -7",
+          "find . -mtime +7",
+          "ls -la",
+          "grep -r"
+        ],
+        "correct_answer": 1,
+        "explanation": "The 'find' command with '-mtime -7' finds files modified less than 7 days ago. The minus sign means 'less than'.",
+        "scenario": "You need to identify recently changed configuration files to troubleshoot a service issue."
+      },
+      {
+        "id": "git-001",
+        "topic": "git",
+        "difficulty": "easy",
+        "question": "Which command stages all changes for commit?",
+        "options": [
+          "git commit -a",
+          "git add .",
+          "git push",
+          "git pull"
+        ],
+        "correct_answer": 2,
+        "explanation": "The 'git add .' command stages all changes in the current directory and subdirectories for the next commit."
+      },
+      {
+        "id": "git-002",
+        "topic": "git",
+        "difficulty": "medium",
+        "question": "How do you undo the last commit but keep the changes?",
+        "options": [
+          "git reset --hard HEAD~1",
+          "git reset --soft HEAD~1",
+          "git revert HEAD",
+          "git checkout HEAD~1"
+        ],
+        "correct_answer": 2,
+        "explanation": "The 'git reset --soft HEAD~1' moves the HEAD pointer back one commit but keeps all changes staged. '--hard' would discard changes.",
+        "scenario": "You committed changes but realized you forgot to include an important file."
+      },
+      {
+        "id": "networking-001",
+        "topic": "networking",
+        "difficulty": "easy",
+        "question": "What is the default port for HTTP?",
+        "options": [
+          "21",
+          "22",
+          "80",
+          "443"
+        ],
+        "correct_answer": 3,
+        "explanation": "HTTP uses port 80 by default. HTTPS uses port 443, SSH uses port 22, and FTP uses port 21."
+      },
+      {
+        "id": "networking-002",
+        "topic": "networking",
+        "difficulty": "medium",
+        "question": "What tool helps diagnose network connectivity issues by showing the path packets take?",
+        "options": [
+          "ping",
+          "traceroute",
+          "netstat",
+          "ss"
+        ],
+        "correct_answer": 2,
+        "explanation": "Traceroute shows the path packets take to reach a destination, displaying each hop and latency. This helps identify where network issues occur.",
+        "scenario": "Users report intermittent connectivity issues to your web application."
+      },
+      {
+        "id": "terraform-001",
+        "topic": "terraform",
+        "difficulty": "easy",
+        "question": "What command applies Terraform configuration changes?",
+        "options": [
+          "terraform init",
+          "terraform plan",
+          "terraform apply",
+          "terraform destroy"
+        ],
+        "correct_answer": 3,
+        "explanation": "The 'terraform apply' command executes the planned changes to reach the desired state defined in your configuration files."
+      },
+      {
+        "id": "terraform-002",
+        "topic": "terraform",
+        "difficulty": "medium",
+        "question": "How do you prevent accidental deletion of critical resources?",
+        "options": [
+          "Use terraform destroy --force",
+          "Add lifecycle { prevent_destroy = true }",
+          "Use terraform import",
+          "Create multiple workspaces"
+        ],
+        "correct_answer": 2,
+        "explanation": "The lifecycle block with prevent_destroy = true prevents Terraform from destroying the resource, even if it's removed from configuration.",
+        "scenario": "You have a production database that must never be accidentally deleted during infrastructure updates."
+      },
+      {
+        "id": "cicd-001",
+        "topic": "cicd",
+        "difficulty": "easy",
+        "question": "What triggers a GitHub Actions workflow?",
+        "options": [
+          "Manual execution only",
+          "Events like push, pull_request, or schedule",
+          "Email notifications",
+          "SSH connections"
+        ],
+        "correct_answer": 2,
+        "explanation": "GitHub Actions workflows are triggered by various events such as push, pull_request, schedule, or manual workflow_dispatch."
+      },
+      {
+        "id": "cicd-002",
+        "topic": "cicd",
+        "difficulty": "medium",
+        "question": "What's the best practice for handling secrets in GitHub Actions?",
+        "options": [
+          "Store in workflow files",
+          "Use GitHub Secrets and reference with ${{ secrets.SECRET_NAME }}",
+          "Store in repository README",
+          "Hardcode in application"
+        ],
+        "correct_answer": 2,
+        "explanation": "GitHub Secrets provide secure storage for sensitive information and can be referenced in workflows using the secrets context.",
+        "scenario": "Your CI/CD pipeline needs to deploy to AWS using access keys."
+      },
+      {
+        "id": "cicd-003",
+        "topic": "cicd",
+        "difficulty": "hard",
+        "question": "Your GitHub Actions workflow fails intermittently on the same step. What's the best debugging approach?",
+        "options": [
+          "Ignore the failures",
+          "Add debug logging and use actions/upload-artifact for troubleshooting",
+          "Disable the failing step",
+          "Run the workflow more frequently"
+        ],
+        "correct_answer": 2,
+        "explanation": "Adding debug logging (using echo or actions/debug) and uploading artifacts helps identify the root cause of intermittent failures.",
+        "scenario": "Your test step passes locally but fails randomly in CI, causing deployment delays."
+      },
+      {
+        "id": "aws-004",
+        "topic": "aws",
+        "difficulty": "easy",
+        "question": "Which AWS service is used for DNS management?",
+        "options": [
+          "CloudFront",
+          "Route 53",
+          "ELB",
+          "API Gateway"
+        ],
+        "correct_answer": 2,
+        "explanation": "Amazon Route 53 is AWS's scalable DNS web service that translates domain names into IP addresses."
+      },
+      {
+        "id": "aws-005",
+        "topic": "aws",
+        "difficulty": "medium",
+        "question": "You need to automatically scale EC2 instances based on CPU utilization. Which service combination should you use?",
+        "options": [
+          "CloudWatch + Auto Scaling Groups",
+          "Lambda + CloudFormation",
+          "ECS + Fargate",
+          "S3 + CloudFront"
+        ],
+        "correct_answer": 1,
+        "explanation": "CloudWatch monitors metrics like CPU utilization, and Auto Scaling Groups automatically add or remove EC2 instances based on those metrics.",
+        "scenario": "Your e-commerce website experiences traffic spikes during sales events and you want to handle load automatically."
+      },
+      {
+        "id": "aws-006",
+        "topic": "aws",
+        "difficulty": "hard",
+        "question": "Your Lambda function is timing out when processing large files from S3. What's the most cost-effective solution?",
+        "options": [
+          "Increase Lambda memory and timeout",
+          "Use Step Functions to break processing into chunks",
+          "Switch to EC2 instances",
+          "Use SQS to queue the processing"
+        ],
+        "correct_answer": 2,
+        "explanation": "Step Functions allow you to break large processing tasks into smaller, manageable chunks, avoiding Lambda timeout limits while maintaining serverless architecture.",
+        "scenario": "You're processing 1GB video files for transcoding, but Lambda times out after 15 minutes."
+      },
+      {
+        "id": "aws-007",
+        "topic": "aws",
+        "difficulty": "hard",
+        "question": "Interview Question: How would you design a disaster recovery strategy for a critical application with RTO of 1 hour and RPO of 15 minutes?",
+        "options": [
+          "Single AZ deployment with daily backups",
+          "Multi-AZ RDS with cross-region read replicas and automated failover",
+          "S3 versioning with lifecycle policies",
+          "EBS snapshots every hour"
+        ],
+        "correct_answer": 2,
+        "explanation": "Multi-AZ RDS provides automated failover within minutes, and cross-region read replicas can be promoted to master for disaster recovery, meeting both RTO and RPO requirements.",
+        "scenario": "Your banking application cannot afford more than 1 hour downtime and can only lose maximum 15 minutes of data."
+      },
+      {
+        "id": "k8s-004",
+        "topic": "kubernetes",
+        "difficulty": "easy",
+        "question": "What is the default restart policy for pods in Kubernetes?",
+        "options": [
+          "Never",
+          "OnFailure",
+          "Always",
+          "Manual"
+        ],
+        "correct_answer": 3,
+        "explanation": "The default restart policy for pods is 'Always', meaning containers will be restarted regardless of exit status."
+      },
+      {
+        "id": "k8s-005",
+        "topic": "kubernetes",
+        "difficulty": "medium",
+        "question": "Your application pods need to communicate with each other by name. What Kubernetes resource should you create?",
+        "options": [
+          "Ingress",
+          "Service",
+          "ConfigMap",
+          "PersistentVolume"
+        ],
+        "correct_answer": 2,
+        "explanation": "Services provide stable DNS names and load balancing for pods, allowing them to communicate reliably even as pods are created and destroyed.",
+        "scenario": "You have a microservices architecture where the frontend needs to call the backend API by a consistent hostname."
+      },
+      {
+        "id": "k8s-006",
+        "topic": "kubernetes",
+        "difficulty": "hard",
+        "question": "Interview Question: Your cluster has nodes with different resource capacities. How do you ensure critical pods are scheduled on nodes with sufficient resources?",
+        "options": [
+          "Use resource requests and limits with node selectors",
+          "Manually assign pods to nodes",
+          "Use only horizontal pod autoscaling",
+          "Increase cluster size"
+        ],
+        "correct_answer": 1,
+        "explanation": "Resource requests ensure the scheduler only places pods on nodes with sufficient available resources, while limits prevent resource overconsumption. Node selectors can target specific node types.",
+        "scenario": "You have a mix of CPU-intensive and memory-intensive applications that need to be scheduled appropriately across heterogeneous nodes."
+      },
+      {
+        "id": "k8s-007",
+        "topic": "kubernetes",
+        "difficulty": "hard",
+        "question": "Your cluster is experiencing intermittent DNS resolution failures. What should you investigate first?",
+        "options": [
+          "Node network configuration",
+          "CoreDNS pod status and logs",
+          "Ingress controller configuration",
+          "Pod security policies"
+        ],
+        "correct_answer": 2,
+        "explanation": "CoreDNS handles DNS resolution in Kubernetes clusters. DNS failures are often caused by CoreDNS pods being unhealthy, resource-constrained, or misconfigured.",
+        "scenario": "Applications randomly fail to resolve service names, causing intermittent connection failures."
+      },
+      {
+        "id": "docker-004",
+        "topic": "docker",
+        "difficulty": "easy",
+        "question": "Which Docker command shows all running containers?",
+        "options": [
+          "docker ls",
+          "docker ps",
+          "docker list",
+          "docker show"
+        ],
+        "correct_answer": 2,
+        "explanation": "The 'docker ps' command lists all currently running containers. Use 'docker ps -a' to see all containers including stopped ones."
+      },
+      {
+        "id": "docker-005",
+        "topic": "docker",
+        "difficulty": "medium",
+        "question": "What's the difference between COPY and ADD in a Dockerfile?",
+        "options": [
+          "No difference, they're aliases",
+          "COPY is for files, ADD is for directories",
+          "ADD has additional features like extracting archives and downloading URLs",
+          "COPY is faster than ADD"
+        ],
+        "correct_answer": 3,
+        "explanation": "ADD has additional features like automatically extracting compressed archives and downloading files from URLs, while COPY is simpler and more predictable for basic file copying.",
+        "scenario": "You're deciding between COPY and ADD for your Dockerfile and want to follow best practices."
+      },
+      {
+        "id": "docker-006",
+        "topic": "docker",
+        "difficulty": "hard",
+        "question": "Interview Question: Your containerized application works locally but fails in production with permission errors. What's the most likely cause?",
+        "options": [
+          "Different Docker versions",
+          "Container running as root locally but non-root in production",
+          "Missing environment variables",
+          "Network configuration differences"
+        ],
+        "correct_answer": 2,
+        "explanation": "Permission errors often occur when containers run as different users between environments. Production environments typically run containers as non-root for security, while local development might default to root.",
+        "scenario": "Your application can write to files locally but gets 'Permission denied' errors when deployed to production Kubernetes cluster."
+      },
+      {
+        "id": "linux-003",
+        "topic": "linux",
+        "difficulty": "easy",
+        "question": "Which command displays the current working directory?",
+        "options": [
+          "pwd",
+          "cwd",
+          "dir",
+          "where"
+        ],
+        "correct_answer": 1,
+        "explanation": "The 'pwd' (print working directory) command displays the full pathname of the current directory."
+      },
+      {
+        "id": "linux-004",
+        "topic": "linux",
+        "difficulty": "medium",
+        "question": "How do you run a command in the background and keep it running after logout?",
+        "options": [
+          "command &",
+          "nohup command &",
+          "bg command",
+          "screen command"
+        ],
+        "correct_answer": 2,
+        "explanation": "The 'nohup' command runs a process immune to hangups (continues after logout), and '&' runs it in the background.",
+        "scenario": "You need to run a long data processing script on a remote server and disconnect your SSH session."
+      },
+      {
+        "id": "linux-005",
+        "topic": "linux",
+        "difficulty": "hard",
+        "question": "Interview Question: A process is consuming 100% CPU and you can't kill it with 'kill -9'. What could be the cause?",
+        "options": [
+          "Process has too many child processes",
+          "Process is in uninterruptible sleep (D state)",
+          "Insufficient permissions",
+          "Process is already dead"
+        ],
+        "correct_answer": 2,
+        "explanation": "Processes in uninterruptible sleep (D state) are usually waiting for I/O operations and cannot be killed until the I/O completes. This often indicates hardware or kernel issues.",
+        "scenario": "A process shows as consuming resources but won't respond to any kill signals, even SIGKILL."
+      },
+      {
+        "id": "git-003",
+        "topic": "git",
+        "difficulty": "easy",
+        "question": "Which command shows the commit history?",
+        "options": [
+          "git history",
+          "git log",
+          "git show",
+          "git commits"
+        ],
+        "correct_answer": 2,
+        "explanation": "The 'git log' command displays the commit history showing commit hashes, authors, dates, and commit messages."
+      },
+      {
+        "id": "git-004",
+        "topic": "git",
+        "difficulty": "medium",
+        "question": "You accidentally committed sensitive data. How do you remove it from Git history?",
+        "options": [
+          "git rm filename && git commit",
+          "git revert HEAD",
+          "git filter-branch or git filter-repo",
+          "Delete the repository and start over"
+        ],
+        "correct_answer": 3,
+        "explanation": "git filter-branch (or the newer git filter-repo) can rewrite Git history to completely remove sensitive data from all commits, not just the latest one.",
+        "scenario": "You accidentally committed API keys to your repository and need to remove them from all historical commits."
+      },
+      {
+        "id": "git-005",
+        "topic": "git",
+        "difficulty": "hard",
+        "question": "Interview Question: Your team has a merge conflict in a critical production branch. Walk through your resolution strategy.",
+        "options": [
+          "Force push to overwrite conflicts",
+          "Identify conflicting files, manually resolve conflicts, test thoroughly, then commit",
+          "Delete the branch and recreate it",
+          "Use git reset --hard to discard changes"
+        ],
+        "correct_answer": 2,
+        "explanation": "Proper merge conflict resolution involves: 1) Identify conflicts with git status, 2) Manually edit files to resolve conflicts, 3) Test the resolution thoroughly, 4) Stage resolved files, 5) Commit the merge resolution.",
+        "scenario": "Two developers modified the same critical configuration file and you need to safely merge their changes for a production deployment."
+      },
+      {
+        "id": "networking-003",
+        "topic": "networking",
+        "difficulty": "easy",
+        "question": "What does HTTPS stand for?",
+        "options": [
+          "HyperText Transfer Protocol Secure",
+          "HyperText Transport Protocol Secure",
+          "HyperText Transmission Protocol Secure",
+          "HyperText Transfer Protocol System"
+        ],
+        "correct_answer": 1,
+        "explanation": "HTTPS stands for HyperText Transfer Protocol Secure, which is HTTP over TLS/SSL encryption."
+      },
+      {
+        "id": "networking-004",
+        "topic": "networking",
+        "difficulty": "medium",
+        "question": "Your web application is slow. How do you determine if it's a network or application issue?",
+        "options": [
+          "Restart the application",
+          "Use tools like ping, curl -w, and application monitoring",
+          "Increase server resources",
+          "Check only application logs"
+        ],
+        "correct_answer": 2,
+        "explanation": "Use ping for basic connectivity, curl with timing (-w) to measure HTTP response times, and application monitoring to distinguish between network latency and application processing time.",
+        "scenario": "Users complain about slow page load times and you need to identify whether the bottleneck is network or application performance."
+      },
+      {
+        "id": "networking-005",
+        "topic": "networking",
+        "difficulty": "hard",
+        "question": "Interview Question: Design a network architecture for a web application that needs to handle 1M requests per day with high availability.",
+        "options": [
+          "Single server with powerful hardware",
+          "Load balancer + multiple app servers + database clustering + CDN",
+          "Serverless functions only",
+          "Container orchestration without load balancing"
+        ],
+        "correct_answer": 2,
+        "explanation": "High availability requires redundancy at every layer: load balancers for traffic distribution, multiple application servers, database clustering for data redundancy, and CDN for global performance.",
+        "scenario": "You're architecting a new e-commerce platform that must handle Black Friday traffic spikes without downtime."
+      },
+      {
+        "id": "terraform-003",
+        "topic": "terraform",
+        "difficulty": "easy",
+        "question": "What file extension do Terraform configuration files use?",
+        "options": [
+          ".tf",
+          ".terraform",
+          ".hcl",
+          ".tfconfig"
+        ],
+        "correct_answer": 1,
+        "explanation": "Terraform configuration files use the .tf extension and are written in HashiCorp Configuration Language (HCL)."
+      },
+      {
+        "id": "terraform-004",
+        "topic": "terraform",
+        "difficulty": "medium",
+        "question": "How do you manage different environments (dev, staging, prod) in Terraform?",
+        "options": [
+          "Separate .tf files for each environment",
+          "Use workspaces or separate state files with variables",
+          "Hard-code environment-specific values",
+          "Use different Terraform versions"
+        ],
+        "correct_answer": 2,
+        "explanation": "Terraform workspaces or separate state files combined with environment-specific variable files allow you to manage multiple environments safely without code duplication.",
+        "scenario": "You need to deploy the same infrastructure to development, staging, and production with different configurations."
+      },
+      {
+        "id": "terraform-005",
+        "topic": "terraform",
+        "difficulty": "hard",
+        "question": "Interview Question: Your Terraform state file is corrupted and out of sync with actual infrastructure. How do you recover?",
+        "options": [
+          "Delete all infrastructure and recreate",
+          "Use terraform import to reconcile existing resources with state",
+          "Manually edit the state file",
+          "Ignore the state file and create new resources"
+        ],
+        "correct_answer": 2,
+        "explanation": "terraform import allows you to bring existing infrastructure under Terraform management by importing resources into the state file, reconciling the state with reality.",
+        "scenario": "After a failed deployment, your state file shows resources that don't exist, and real resources that aren't tracked in state."
+      },
+      {
+        "id": "cicd-004",
+        "topic": "cicd",
+        "difficulty": "easy",
+        "question": "What does CI stand for in CI/CD?",
+        "options": [
+          "Code Integration",
+          "Continuous Integration",
+          "Computer Integration",
+          "Container Integration"
+        ],
+        "correct_answer": 2,
+        "explanation": "CI stands for Continuous Integration, the practice of frequently integrating code changes into a shared repository with automated testing."
+      },
+      {
+        "id": "cicd-005",
+        "topic": "cicd",
+        "difficulty": "medium",
+        "question": "Your GitHub Actions workflow needs to deploy to different environments based on the branch. How do you implement this?",
+        "options": [
+          "Create separate workflows for each branch",
+          "Use conditional steps with if: statements and environment variables",
+          "Manually trigger deployments",
+          "Use the same deployment for all branches"
+        ],
+        "correct_answer": 2,
+        "explanation": "Conditional steps using 'if' statements can check the branch name and set appropriate environment variables to control deployment targets.",
+        "scenario": "You want main branch to deploy to production, develop branch to staging, and feature branches to development environment."
+      },
+      {
+        "id": "cicd-006",
+        "topic": "cicd",
+        "difficulty": "hard",
+        "question": "Interview Question: Your deployment pipeline needs zero-downtime deployments. What strategy would you implement?",
+        "options": [
+          "Stop all services, deploy, restart services",
+          "Blue-green deployment or rolling updates with health checks",
+          "Deploy during maintenance windows only",
+          "Use feature flags to hide new features"
+        ],
+        "correct_answer": 2,
+        "explanation": "Blue-green deployments maintain two identical environments, switching traffic after deployment validation. Rolling updates gradually replace instances while maintaining service availability.",
+        "scenario": "Your e-commerce platform cannot afford any downtime during deployments, especially during peak shopping hours."
+      },
+      {
+        "id": "security-001",
+        "topic": "security",
+        "difficulty": "easy",
+        "question": "What is the principle of least privilege?",
+        "options": [
+          "Give users maximum permissions for convenience",
+          "Grant minimum permissions necessary to perform job functions",
+          "Use the same password for all accounts",
+          "Allow anonymous access to reduce complexity"
+        ],
+        "correct_answer": 2,
+        "explanation": "The principle of least privilege means granting users, processes, and systems only the minimum permissions necessary to perform their required functions."
+      },
+      {
+        "id": "security-002",
+        "topic": "security",
+        "difficulty": "medium",
+        "question": "How should you handle API keys in a containerized application?",
+        "options": [
+          "Hard-code them in the Docker image",
+          "Pass them as environment variables or use secret management systems",
+          "Store them in the application logs",
+          "Include them in the source code"
+        ],
+        "correct_answer": 2,
+        "explanation": "API keys should be passed as environment variables at runtime or retrieved from dedicated secret management systems like Kubernetes Secrets, AWS Secrets Manager, or HashiCorp Vault.",
+        "scenario": "Your microservice needs to authenticate with external APIs while maintaining security best practices."
+      },
+      {
+        "id": "security-003",
+        "topic": "security",
+        "difficulty": "hard",
+        "question": "Interview Question: You discover a security vulnerability in your production system. Walk through your incident response process.",
+        "options": [
+          "Fix it immediately without documentation",
+          "Assess impact, contain threat, notify stakeholders, fix vulnerability, document and review",
+          "Wait for the next scheduled maintenance window",
+          "Only fix if actively being exploited"
+        ],
+        "correct_answer": 2,
+        "explanation": "Proper incident response: 1) Assess impact and severity, 2) Contain the threat, 3) Notify relevant stakeholders, 4) Implement fix, 5) Document incident and lessons learned, 6) Review and improve processes.",
+        "scenario": "Your security team reports a critical vulnerability in a library used by your production application that processes customer data."
+      },
+      {
+        "id": "monitoring-001",
+        "topic": "monitoring",
+        "difficulty": "easy",
+        "question": "What are the three pillars of observability?",
+        "options": [
+          "CPU, Memory, Disk",
+          "Logs, Metrics, Traces",
+          "Alerts, Dashboards, Reports",
+          "Monitoring, Alerting, Reporting"
+        ],
+        "correct_answer": 2,
+        "explanation": "The three pillars of observability are Logs (detailed records), Metrics (numerical measurements), and Traces (request flows through systems)."
+      },
+      {
+        "id": "monitoring-002",
+        "topic": "monitoring",
+        "difficulty": "medium",
+        "question": "Your application response time suddenly increased. What metrics should you check first?",
+        "options": [
+          "Only application logs",
+          "CPU usage, memory usage, disk I/O, network latency, and database performance",
+          "Just restart the application",
+          "Check only user complaints"
+        ],
+        "correct_answer": 2,
+        "explanation": "Performance issues can stem from resource constraints (CPU, memory), I/O bottlenecks (disk, network), or database problems. Check system metrics before diving into application-specific issues.",
+        "scenario": "Your web application's average response time jumped from 200ms to 2 seconds and users are complaining about slowness."
+      },
+      {
+        "id": "monitoring-003",
+        "topic": "monitoring",
+        "difficulty": "hard",
+        "question": "Interview Question: Design a monitoring strategy for a microservices architecture with 20+ services.",
+        "options": [
+          "Monitor each service independently",
+          "Centralized logging, distributed tracing, service mesh metrics, and SLA-based alerting",
+          "Only monitor the main application",
+          "Use basic uptime checks only"
+        ],
+        "correct_answer": 2,
+        "explanation": "Microservices require: centralized logging for correlation, distributed tracing to follow requests across services, service mesh metrics for inter-service communication, and SLA-based alerting focused on user experience.",
+        "scenario": "You need to ensure visibility into a complex microservices system where a single user request might touch 10+ different services."
+      },
+      {
+        "id": "linux-006",
+        "topic": "linux",
+        "difficulty": "easy",
+        "question": "What is the Linux kernel?",
+        "options": [
+          "A text editor for Linux",
+          "The core component that manages system resources and hardware",
+          "A graphical user interface",
+          "A package manager"
+        ],
+        "correct_answer": 2,
+        "explanation": "The Linux kernel is the core component of the Linux operating system that manages system resources, hardware, and provides an interface between hardware and software."
+      },
+      {
+        "id": "linux-007",
+        "topic": "linux",
+        "difficulty": "medium",
+        "question": "What are inodes in Linux?",
+        "options": [
+          "Network interfaces",
+          "Data structures that store metadata about files and directories",
+          "Process identifiers",
+          "Memory addresses"
+        ],
+        "correct_answer": 2,
+        "explanation": "Inodes are data structures that store metadata about files and directories, including permissions, ownership, timestamps, and pointers to data blocks.",
+        "scenario": "You're investigating filesystem issues and need to understand how Linux tracks file information."
+      },
+      {
+        "id": "linux-008",
+        "topic": "linux",
+        "difficulty": "hard",
+        "question": "What is a zombie process and how would you handle it?",
+        "options": [
+          "A process that consumes too much memory",
+          "A child process that has completed but parent hasn't read its exit status",
+          "A process running in the background",
+          "A process with root privileges"
+        ],
+        "correct_answer": 2,
+        "explanation": "A zombie process is a child process that has completed execution but its parent hasn't read its exit status yet. The process entry remains in the process table until the parent reads it.",
+        "scenario": "You notice zombie processes accumulating on your system and need to understand why they're not being cleaned up."
+      },
+      {
+        "id": "linux-009",
+        "topic": "linux",
+        "difficulty": "medium",
+        "question": "What is the difference between soft links and hard links?",
+        "options": [
+          "No difference, they're the same",
+          "Soft links point to filenames, hard links point to inodes directly",
+          "Hard links are slower than soft links",
+          "Soft links only work with directories"
+        ],
+        "correct_answer": 2,
+        "explanation": "Soft links (symbolic links) point to filenames and can break if the target is moved/deleted. Hard links point directly to inodes and remain valid as long as the file exists.",
+        "scenario": "You need to create links to important files and want to understand which type is more appropriate for your use case."
+      },
+      {
+        "id": "linux-010",
+        "topic": "linux",
+        "difficulty": "easy",
+        "question": "What does chmod +x FILENAME do?",
+        "options": [
+          "Makes the file hidden",
+          "Adds execute permission to the file",
+          "Changes file ownership",
+          "Compresses the file"
+        ],
+        "correct_answer": 2,
+        "explanation": "chmod +x adds execute permission to a file, allowing it to be run as a program or script."
+      },
+      {
+        "id": "linux-011",
+        "topic": "linux",
+        "difficulty": "easy",
+        "question": "Which command shows free/used memory?",
+        "options": [
+          "df -h",
+          "free -h",
+          "ps aux",
+          "top"
+        ],
+        "correct_answer": 2,
+        "explanation": "The 'free -h' command displays memory usage in human-readable format, showing total, used, free, and available memory."
+      },
+      {
+        "id": "linux-012",
+        "topic": "linux",
+        "difficulty": "medium",
+        "question": "What is swap space in Linux?",
+        "options": [
+          "Temporary storage for downloads",
+          "Virtual memory that extends RAM using disk space",
+          "Cache for frequently accessed files",
+          "Space for log files"
+        ],
+        "correct_answer": 2,
+        "explanation": "Swap space is virtual memory that uses disk space to extend RAM when physical memory is full, allowing the system to handle more processes.",
+        "scenario": "Your system is running out of memory and you need to understand how swap can help manage memory pressure."
+      },
+      {
+        "id": "linux-013",
+        "topic": "linux",
+        "difficulty": "hard",
+        "question": "What is inside /proc in Linux?",
+        "options": [
+          "User programs and applications",
+          "Virtual filesystem containing kernel and process information",
+          "System configuration files",
+          "Log files and temporary data"
+        ],
+        "correct_answer": 2,
+        "explanation": "/proc is a virtual filesystem that provides an interface to kernel data structures and runtime system information, including process details, system statistics, and kernel parameters.",
+        "scenario": "You need to gather detailed system information for debugging and want to understand what /proc contains."
+      },
+      {
+        "id": "networking-006",
+        "topic": "networking",
+        "difficulty": "medium",
+        "question": "How does a 3-way handshake work in TCP?",
+        "options": [
+          "Client sends data, server responds, client acknowledges",
+          "SYN, SYN-ACK, ACK sequence to establish connection",
+          "Server sends request, client responds, server confirms",
+          "Three separate connections are established"
+        ],
+        "correct_answer": 2,
+        "explanation": "TCP 3-way handshake: 1) Client sends SYN packet, 2) Server responds with SYN-ACK, 3) Client sends ACK to establish the connection.",
+        "scenario": "You're debugging connection issues and need to understand how TCP connections are established."
+      },
+      {
+        "id": "networking-007",
+        "topic": "networking",
+        "difficulty": "hard",
+        "question": "When I type google.com into the browser, what actually happens?",
+        "options": [
+          "Browser directly connects to Google's servers",
+          "DNS resolution, TCP handshake, HTTP request, response rendering",
+          "Only HTTP request is sent",
+          "Browser cache lookup only"
+        ],
+        "correct_answer": 2,
+        "explanation": "Complete flow: DNS resolution to get IP, TCP 3-way handshake, TLS handshake if HTTPS, HTTP request sent, server processes and responds, browser renders the page.",
+        "scenario": "Classic interview question testing understanding of the complete web request flow from browser to server."
+      },
+      {
+        "id": "networking-008",
+        "topic": "networking",
+        "difficulty": "medium",
+        "question": "What is the difference between TCP and UDP?",
+        "options": [
+          "TCP is faster than UDP",
+          "TCP is connection-oriented and reliable, UDP is connectionless and faster",
+          "UDP is more secure than TCP",
+          "TCP only works with HTTP"
+        ],
+        "correct_answer": 2,
+        "explanation": "TCP provides reliable, ordered delivery with connection management and error correction. UDP is connectionless, faster, but doesn't guarantee delivery or order.",
+        "scenario": "You're designing a system and need to choose between TCP and UDP based on your requirements."
+      },
+      {
+        "id": "aws-008",
+        "topic": "aws",
+        "difficulty": "medium",
+        "question": "What is an AMI in AWS?",
+        "options": [
+          "Amazon Machine Image - a template for EC2 instances",
+          "A monitoring service",
+          "A database backup",
+          "A load balancer configuration"
+        ],
+        "correct_answer": 1,
+        "explanation": "An AMI (Amazon Machine Image) is a template that contains the software configuration (OS, application server, applications) required to launch an EC2 instance.",
+        "scenario": "You need to create standardized server configurations for your development team."
+      },
+      {
+        "id": "aws-009",
+        "topic": "aws",
+        "difficulty": "hard",
+        "question": "I want to create a 3-tier architecture. What would be the key components?",
+        "options": [
+          "Three EC2 instances in different regions",
+          "Presentation tier (ALB/CloudFront), Logic tier (EC2/ECS), Data tier (RDS/DynamoDB)",
+          "Three separate VPCs",
+          "Three different AWS accounts"
+        ],
+        "correct_answer": 2,
+        "explanation": "3-tier architecture: Presentation tier (load balancers, CDN), Application/Logic tier (compute services), Data tier (databases). Each tier can scale independently.",
+        "scenario": "You're designing a scalable web application architecture that separates concerns and allows independent scaling."
+      },
+      {
+        "id": "aws-010",
+        "topic": "aws",
+        "difficulty": "easy",
+        "question": "What is auto-scaling in AWS?",
+        "options": [
+          "Automatic cost optimization",
+          "Automatically adjusting the number of EC2 instances based on demand",
+          "Automatic backup scheduling",
+          "Automatic security updates"
+        ],
+        "correct_answer": 2,
+        "explanation": "Auto-scaling automatically adjusts the number of EC2 instances in response to changing demand, helping maintain performance while optimizing costs."
+      },
+      {
+        "id": "docker-007",
+        "topic": "docker",
+        "difficulty": "medium",
+        "question": "What is the difference between COPY and ADD in a Dockerfile?",
+        "options": [
+          "COPY is newer than ADD",
+          "ADD has additional features like URL downloads and archive extraction",
+          "COPY is faster than ADD",
+          "No difference, they do the same thing"
+        ],
+        "correct_answer": 2,
+        "explanation": "ADD can download files from URLs and automatically extract archives, while COPY only copies files/folders. COPY is preferred for simple file copying due to its predictable behavior."
+      },
+      {
+        "id": "docker-008",
+        "topic": "docker",
+        "difficulty": "medium",
+        "question": "What is the difference between CMD and RUN in a Dockerfile?",
+        "options": [
+          "No difference, they're aliases",
+          "RUN executes during build time, CMD specifies default command at runtime",
+          "CMD is only for Linux containers",
+          "RUN is deprecated, use CMD instead"
+        ],
+        "correct_answer": 2,
+        "explanation": "RUN executes commands during the image build process and creates new layers. CMD specifies the default command to run when a container starts.",
+        "scenario": "You're writing a Dockerfile and need to understand when to use RUN vs CMD for different operations."
+      },
+      {
+        "id": "docker-009",
+        "topic": "docker",
+        "difficulty": "easy",
+        "question": "What is a dangling image in Docker?",
+        "options": [
+          "An image that's currently running",
+          "An untagged image that's no longer referenced by any tagged image",
+          "A corrupted image file",
+          "An image stored remotely"
+        ],
+        "correct_answer": 2,
+        "explanation": "A dangling image is an untagged image that's no longer referenced by any tagged image, often created during the build process. They can be cleaned up with 'docker image prune'."
+      },
+      {
+        "id": "k8s-008",
+        "topic": "kubernetes",
+        "difficulty": "easy",
+        "question": "What problems does Kubernetes solve?",
+        "options": [
+          "Only container security",
+          "Container orchestration, scaling, service discovery, and management",
+          "Only load balancing",
+          "Database management only"
+        ],
+        "correct_answer": 2,
+        "explanation": "Kubernetes solves container orchestration challenges including automated deployment, scaling, load balancing, service discovery, health monitoring, and rolling updates."
+      },
+      {
+        "id": "k8s-009",
+        "topic": "kubernetes",
+        "difficulty": "medium",
+        "question": "What are deployments in Kubernetes?",
+        "options": [
+          "Single pod configurations",
+          "Objects that manage ReplicaSets and provide declarative updates to pods",
+          "Network policies",
+          "Storage configurations"
+        ],
+        "correct_answer": 2,
+        "explanation": "Deployments manage ReplicaSets and provide declarative updates to pods, enabling rolling updates, rollbacks, and scaling of applications.",
+        "scenario": "You need to deploy an application with multiple replicas and want automatic rolling updates."
+      },
+      {
+        "id": "k8s-010",
+        "topic": "kubernetes",
+        "difficulty": "hard",
+        "question": "What happens when a master node fails in Kubernetes?",
+        "options": [
+          "All pods stop immediately",
+          "Existing pods continue running but no new scheduling or API operations",
+          "The cluster shuts down completely",
+          "Worker nodes take over master functions"
+        ],
+        "correct_answer": 2,
+        "explanation": "When master node fails, existing pods continue running on worker nodes, but no new scheduling, scaling, or API operations can occur until the master is restored or fails over to backup masters.",
+        "scenario": "You're designing a highly available Kubernetes cluster and need to understand failure scenarios."
+      },
+      {
+        "id": "terraform-006",
+        "topic": "terraform",
+        "difficulty": "easy",
+        "question": "What is Infrastructure as Code (IaC)?",
+        "options": [
+          "Writing code inside infrastructure",
+          "Managing infrastructure through machine-readable definition files",
+          "Coding applications for cloud platforms",
+          "Manual infrastructure configuration"
+        ],
+        "correct_answer": 2,
+        "explanation": "Infrastructure as Code (IaC) is the practice of managing and provisioning infrastructure through machine-readable definition files, rather than manual processes."
+      },
+      {
+        "id": "terraform-007",
+        "topic": "terraform",
+        "difficulty": "medium",
+        "question": "What are modules in Terraform?",
+        "options": [
+          "Individual resource definitions",
+          "Reusable packages of Terraform configuration",
+          "State file backups",
+          "Provider plugins"
+        ],
+        "correct_answer": 2,
+        "explanation": "Modules are reusable packages of Terraform configuration that encapsulate resources and can be shared across different projects or environments.",
+        "scenario": "You want to create reusable infrastructure components that can be shared across multiple projects."
+      },
+      {
+        "id": "terraform-008",
+        "topic": "terraform",
+        "difficulty": "hard",
+        "question": "How can you import existing resources under Terraform management?",
+        "options": [
+          "Delete and recreate the resources",
+          "Use 'terraform import' command to bring existing resources into state",
+          "Manually edit the state file",
+          "Use 'terraform apply' with existing resources"
+        ],
+        "correct_answer": 2,
+        "explanation": "The 'terraform import' command allows you to bring existing infrastructure resources under Terraform management by importing them into the state file.",
+        "scenario": "You have existing infrastructure that wasn't created with Terraform and want to manage it with Terraform going forward."
+      },
+      {
+        "id": "git-006",
+        "topic": "git",
+        "difficulty": "easy",
+        "question": "What is the basic Git workflow?",
+        "options": [
+          "Edit, commit, push",
+          "Add, commit, push",
+          "Clone, edit, push",
+          "Pull, edit, commit, push"
+        ],
+        "correct_answer": 4,
+        "explanation": "Basic Git workflow: Pull latest changes, make edits, stage changes (add), commit with message, push to remote repository."
+      },
+      {
+        "id": "git-007",
+        "topic": "git",
+        "difficulty": "medium",
+        "question": "What is git cherry-pick?",
+        "options": [
+          "Selecting files to commit",
+          "Applying specific commits from one branch to another",
+          "Deleting unwanted commits",
+          "Merging entire branches"
+        ],
+        "correct_answer": 2,
+        "explanation": "Git cherry-pick allows you to apply specific commits from one branch to another, useful for selectively bringing changes without merging entire branches.",
+        "scenario": "You need to apply a specific bug fix from a feature branch to the main branch without merging the entire feature."
+      },
+      {
+        "id": "git-008",
+        "topic": "git",
+        "difficulty": "hard",
+        "question": "When do you use 'git rebase' instead of 'git merge'?",
+        "options": [
+          "Always use rebase instead of merge",
+          "To create a linear history and avoid merge commits",
+          "Only for reverting changes",
+          "When working with remote branches only"
+        ],
+        "correct_answer": 2,
+        "explanation": "Use rebase to create a linear history by re-applying commits on top of another branch, avoiding merge commits. Don't rebase shared/public branches.",
+        "scenario": "You want to maintain a clean, linear commit history when integrating feature branches."
+      },
+      {
+        "id": "cicd-007",
+        "topic": "cicd",
+        "difficulty": "easy",
+        "question": "What is meant by Continuous Integration?",
+        "options": [
+          "Deploying code once per month",
+          "Frequently integrating code changes with automated testing",
+          "Manual testing of all features",
+          "Continuous monitoring only"
+        ],
+        "correct_answer": 2,
+        "explanation": "Continuous Integration is the practice of frequently integrating code changes into a shared repository, with automated builds and tests to detect issues early."
+      },
+      {
+        "id": "cicd-008",
+        "topic": "cicd",
+        "difficulty": "medium",
+        "question": "What is blue-green deployment?",
+        "options": [
+          "Using blue and green colors in UI",
+          "Two identical environments where one serves traffic while the other is updated",
+          "Deploying to development and production simultaneously",
+          "A security scanning technique"
+        ],
+        "correct_answer": 2,
+        "explanation": "Blue-green deployment uses two identical production environments. One (blue) serves live traffic while the other (green) is updated, then traffic is switched instantly.",
+        "scenario": "You need zero-downtime deployments for a critical e-commerce application."
+      },
+      {
+        "id": "cicd-009",
+        "topic": "cicd",
+        "difficulty": "medium",
+        "question": "What is a canary deployment?",
+        "options": [
+          "Deploying to a bird-themed environment",
+          "Gradually rolling out changes to a small subset of users first",
+          "Deploying only during specific hours",
+          "Backing up data before deployment"
+        ],
+        "correct_answer": 2,
+        "explanation": "Canary deployment gradually rolls out changes to a small percentage of users first, monitoring for issues before full rollout.",
+        "scenario": "You want to test new features with real users while minimizing risk of widespread issues."
+      },
+      {
+        "id": "ansible-001",
+        "topic": "ansible",
+        "difficulty": "easy",
+        "question": "What is Ansible?",
+        "options": [
+          "A programming language",
+          "An agentless automation tool for configuration management",
+          "A database management system",
+          "A monitoring tool"
+        ],
+        "correct_answer": 2,
+        "explanation": "Ansible is an agentless automation tool used for configuration management, application deployment, and orchestration using SSH connections."
+      },
+      {
+        "id": "ansible-002",
+        "topic": "ansible",
+        "difficulty": "medium",
+        "question": "What protocol does Ansible use for communicating with client systems?",
+        "options": [
+          "HTTP",
+          "SSH",
+          "FTP",
+          "SMTP"
+        ],
+        "correct_answer": 2,
+        "explanation": "Ansible uses SSH (Secure Shell) to communicate with client systems, making it agentless as no special software needs to be installed on managed nodes."
+      },
+      {
+        "id": "ansible-003",
+        "topic": "ansible",
+        "difficulty": "medium",
+        "question": "What is an inventory file in Ansible?",
+        "options": [
+          "A list of tasks to execute",
+          "A file that defines hosts and groups that Ansible manages",
+          "A backup of system configurations",
+          "A log of executed commands"
+        ],
+        "correct_answer": 2,
+        "explanation": "An inventory file defines the hosts and groups of hosts that Ansible can manage, specifying connection details and grouping for organized management.",
+        "scenario": "You need to manage multiple servers and want to organize them into logical groups for different environments."
+      },
+      {
+        "id": "azure-001",
+        "topic": "azure",
+        "difficulty": "easy",
+        "question": "What is Azure?",
+        "options": [
+          "A programming language",
+          "Microsoft's cloud computing platform",
+          "A database system",
+          "An operating system"
+        ],
+        "correct_answer": 2,
+        "explanation": "Azure is Microsoft's cloud computing platform that provides various cloud services including computing, analytics, storage, and networking."
+      },
+      {
+        "id": "azure-002",
+        "topic": "azure",
+        "difficulty": "medium",
+        "question": "What are ARM templates in Azure?",
+        "options": [
+          "CPU architecture specifications",
+          "JSON templates for defining and deploying Azure resources",
+          "Security access controls",
+          "Network configuration files"
+        ],
+        "correct_answer": 2,
+        "explanation": "ARM (Azure Resource Manager) templates are JSON files that define the infrastructure and configuration for Azure resources, enabling Infrastructure as Code.",
+        "scenario": "You want to deploy consistent Azure environments across development, staging, and production."
+      },
+      {
+        "id": "azure-003",
+        "topic": "azure",
+        "difficulty": "medium",
+        "question": "How is Azure App Service different from Azure Functions?",
+        "options": [
+          "No difference, they're the same service",
+          "App Service is for full applications, Functions is for serverless event-driven code",
+          "App Service is cheaper than Functions",
+          "Functions only work with databases"
+        ],
+        "correct_answer": 2,
+        "explanation": "Azure App Service hosts complete web applications, while Azure Functions is a serverless compute service for event-driven, short-running code execution.",
+        "scenario": "You need to choose between hosting a full web application vs implementing specific business logic triggered by events."
+      },
+      {
+        "id": "aws-011",
+        "topic": "aws",
+        "difficulty": "medium",
+        "question": "What services can help minimize a DDoS attack on AWS?",
+        "options": [
+          "Only EC2 instances",
+          "AWS Shield, CloudFront, and WAF",
+          "RDS and Lambda only",
+          "S3 and ECS"
+        ],
+        "correct_answer": 2,
+        "explanation": "AWS Shield provides DDoS protection, CloudFront distributes traffic globally, and WAF filters malicious requests before they reach your application.",
+        "scenario": "Your e-commerce website is experiencing a large-scale DDoS attack affecting customer access."
+      },
+      {
+        "id": "aws-012",
+        "topic": "aws",
+        "difficulty": "hard",
+        "question": "In a VPC with private and public subnets, where should database servers ideally be launched?",
+        "options": [
+          "Public subnets for better performance",
+          "Private subnets with no internet access",
+          "It doesn't matter which subnet",
+          "Split between both subnet types"
+        ],
+        "correct_answer": 2,
+        "explanation": "Database servers should be in private subnets to prevent direct internet access, enhancing security. They can communicate with application servers through internal networking.",
+        "scenario": "You're designing a secure 3-tier architecture for a financial application with strict security requirements."
+      },
+      {
+        "id": "aws-013",
+        "topic": "aws",
+        "difficulty": "medium",
+        "question": "Your web application has the highest traffic on Wednesdays and Fridays between 9 AM and 7 PM. What's the best scaling solution?",
+        "options": [
+          "Manual scaling during those times",
+          "Scheduled Auto Scaling with predictive scaling",
+          "Always run maximum capacity",
+          "Use only reactive scaling"
+        ],
+        "correct_answer": 2,
+        "explanation": "Scheduled Auto Scaling can proactively scale based on predictable patterns, combined with predictive scaling for optimal resource management and cost efficiency.",
+        "scenario": "You want to optimize costs while ensuring performance during known traffic peaks."
+      },
+      {
+        "id": "aws-014",
+        "topic": "aws",
+        "difficulty": "easy",
+        "question": "What are the different types of load balancers in AWS?",
+        "options": [
+          "Only Application Load Balancer",
+          "Application, Network, and Gateway Load Balancers",
+          "Only Classic Load Balancer",
+          "Internal and External Load Balancers"
+        ],
+        "correct_answer": 2,
+        "explanation": "AWS offers Application Load Balancer (Layer 7), Network Load Balancer (Layer 4), and Gateway Load Balancer for different use cases and protocols."
+      },
+      {
+        "id": "kubernetes-011",
+        "topic": "kubernetes",
+        "difficulty": "medium",
+        "question": "What are StatefulSets used for in Kubernetes?",
+        "options": [
+          "Running stateless applications only",
+          "Managing stateful applications with persistent storage and stable network identities",
+          "Load balancing between pods",
+          "Creating temporary containers"
+        ],
+        "correct_answer": 2,
+        "explanation": "StatefulSets provide stable network identities, ordered deployment/scaling, and persistent storage for stateful applications like databases.",
+        "scenario": "You need to deploy a MongoDB cluster in Kubernetes with persistent data and stable hostnames."
+      },
+      {
+        "id": "kubernetes-012",
+        "topic": "kubernetes",
+        "difficulty": "hard",
+        "question": "How do you restrict pod-to-pod communication in a cluster?",
+        "options": [
+          "Use firewalls on each node",
+          "Implement Network Policies",
+          "Separate pods into different namespaces only",
+          "Use different Docker networks"
+        ],
+        "correct_answer": 2,
+        "explanation": "Network Policies define rules for how pods can communicate with each other and other network endpoints, providing microsegmentation within the cluster.",
+        "scenario": "You need to ensure that only frontend pods can communicate with backend pods in a multi-tenant environment."
+      },
+      {
+        "id": "kubernetes-013",
+        "topic": "kubernetes",
+        "difficulty": "medium",
+        "question": "What is the role of the kube-apiserver?",
+        "options": [
+          "Running container workloads",
+          "Central management component that exposes the Kubernetes API",
+          "Storing container images",
+          "Managing network routing"
+        ],
+        "correct_answer": 2,
+        "explanation": "The kube-apiserver is the central management component that validates and configures API objects, serving as the frontend for the Kubernetes control plane.",
+        "scenario": "You're troubleshooting cluster issues and need to understand which component handles API requests."
+      },
+      {
+        "id": "kubernetes-014",
+        "topic": "kubernetes",
+        "difficulty": "hard",
+        "question": "What is the role of ETCD in Kubernetes?",
+        "options": [
+          "Container runtime engine",
+          "Distributed key-value store that holds cluster state",
+          "Load balancer for services",
+          "Image registry"
+        ],
+        "correct_answer": 2,
+        "explanation": "ETCD is a distributed key-value store that stores all cluster data, including configuration, state, and metadata. It's the single source of truth for the cluster.",
+        "scenario": "Your cluster is experiencing data consistency issues and you need to understand the storage backend."
+      },
+      {
+        "id": "kubernetes-015",
+        "topic": "kubernetes",
+        "difficulty": "medium",
+        "question": "What is an Ingress controller?",
+        "options": [
+          "A type of pod",
+          "A component that manages external access to services via HTTP/HTTPS rules",
+          "A storage volume",
+          "A network interface"
+        ],
+        "correct_answer": 2,
+        "explanation": "An Ingress controller implements Ingress rules to route external HTTP/HTTPS traffic to services based on hostnames, paths, and other criteria.",
+        "scenario": "You need to expose multiple services with custom domains and SSL certificates."
+      },
+      {
+        "id": "docker-010",
+        "topic": "docker",
+        "difficulty": "medium",
+        "question": "What is the difference between 'expose' and 'publish' in Docker?",
+        "options": [
+          "They do exactly the same thing",
+          "EXPOSE documents ports, PUBLISH maps ports to host",
+          "EXPOSE is for UDP, PUBLISH is for TCP",
+          "EXPOSE is deprecated, use PUBLISH"
+        ],
+        "correct_answer": 2,
+        "explanation": "EXPOSE in Dockerfile documents which ports the container uses but doesn't publish them. The -p flag (publish) actually maps container ports to host ports.",
+        "scenario": "You're writing a Dockerfile and need to understand how to properly expose and publish ports."
+      },
+      {
+        "id": "docker-011",
+        "topic": "docker",
+        "difficulty": "hard",
+        "question": "When you limit memory for a container, does it reserve that memory?",
+        "options": [
+          "Yes, it reserves the exact amount",
+          "No, it sets a maximum limit but doesn't reserve",
+          "Only on Windows containers",
+          "Depends on the base image"
+        ],
+        "correct_answer": 2,
+        "explanation": "Memory limits set a maximum boundary but don't reserve memory. The container can use less memory, and the OS can allocate that memory to other processes.",
+        "scenario": "You're planning resource allocation for multiple containers on the same host."
+      },
+      {
+        "id": "docker-012",
+        "topic": "docker",
+        "difficulty": "medium",
+        "question": "What is an orphaned volume in Docker?",
+        "options": [
+          "A volume attached to multiple containers",
+          "A volume not associated with any container",
+          "A volume with incorrect permissions",
+          "A volume stored on remote storage"
+        ],
+        "correct_answer": 2,
+        "explanation": "An orphaned volume is one that's no longer associated with any container, often left behind when containers are removed without cleaning up volumes.",
+        "scenario": "Your Docker host is running out of disk space and you need to clean up unused resources."
+      },
+      {
+        "id": "docker-013",
+        "topic": "docker",
+        "difficulty": "easy",
+        "question": "When do you use Docker Compose vs Docker Swarm vs Kubernetes?",
+        "options": [
+          "They're all the same tool",
+          "Compose for dev/single host, Swarm for simple clusters, K8s for complex orchestration",
+          "Always use Kubernetes",
+          "Compose for production only"
+        ],
+        "correct_answer": 2,
+        "explanation": "Docker Compose is for development and single-host deployments, Swarm for simple multi-host clustering, and Kubernetes for complex production orchestration.",
+        "scenario": "You need to choose the right containerization strategy for different environments."
+      },
+      {
+        "id": "linux-014",
+        "topic": "linux",
+        "difficulty": "medium",
+        "question": "What are namespaces and cgroups in Linux?",
+        "options": [
+          "File organization tools",
+          "Process isolation (namespaces) and resource limiting (cgroups) mechanisms",
+          "Network configuration tools",
+          "Package management systems"
+        ],
+        "correct_answer": 2,
+        "explanation": "Namespaces provide process isolation (PID, network, mount, etc.) while cgroups control and limit resource usage (CPU, memory, I/O) for process groups.",
+        "scenario": "You're implementing container technology and need to understand the underlying Linux mechanisms."
+      },
+      {
+        "id": "linux-015",
+        "topic": "linux",
+        "difficulty": "hard",
+        "question": "A process on the system can no longer log files. How would you debug this?",
+        "options": [
+          "Just restart the process",
+          "Check disk space, file permissions, open file descriptors, and filesystem health",
+          "Only check application logs",
+          "Reboot the server"
+        ],
+        "correct_answer": 2,
+        "explanation": "Debug by checking: disk space (df -h), file permissions (ls -la), open file descriptors (lsof), inode usage (df -i), and filesystem errors (dmesg).",
+        "scenario": "A critical application suddenly stopped writing logs, affecting monitoring and debugging capabilities."
+      },
+      {
+        "id": "linux-016",
+        "topic": "linux",
+        "difficulty": "medium",
+        "question": "What is LILO in Linux?",
+        "options": [
+          "A file compression tool",
+          "Linux Loader - a boot loader for Linux systems",
+          "A network protocol",
+          "A process scheduler"
+        ],
+        "correct_answer": 2,
+        "explanation": "LILO (Linux Loader) is a boot loader that can boot Linux and other operating systems. It's largely been replaced by GRUB in modern systems.",
+        "scenario": "You're working with legacy systems and encounter LILO configuration during boot troubleshooting."
+      },
+      {
+        "id": "linux-017",
+        "topic": "linux",
+        "difficulty": "hard",
+        "question": "What happens when you type 'ls' into a terminal at the kernel level?",
+        "options": [
+          "Files are displayed immediately",
+          "Shell forks, exec system call loads ls binary, kernel schedules process",
+          "Only filesystem is accessed",
+          "Network request is made"
+        ],
+        "correct_answer": 2,
+        "explanation": "The shell forks creating a child process, uses exec() system call to load ls binary, kernel schedules the process, ls makes system calls to read directory, returns data to shell.",
+        "scenario": "Classic deep-dive interview question testing understanding of process creation and system calls."
+      },
+      {
+        "id": "networking-009",
+        "topic": "networking",
+        "difficulty": "medium",
+        "question": "What is CIDR and why is it used?",
+        "options": [
+          "A network protocol",
+          "Classless Inter-Domain Routing for efficient IP address allocation",
+          "A type of firewall",
+          "A DNS record type"
+        ],
+        "correct_answer": 2,
+        "explanation": "CIDR notation (e.g., 192.168.1.0/24) allows flexible subnet sizing beyond traditional class boundaries, enabling more efficient IP address allocation and routing.",
+        "scenario": "You're designing network subnets for a cloud infrastructure and need to optimize IP address usage."
+      },
+      {
+        "id": "networking-010",
+        "topic": "networking",
+        "difficulty": "hard",
+        "question": "Data transfer between two hosts is extremely slow. How do you troubleshoot?",
+        "options": [
+          "Only restart the network interface",
+          "Check bandwidth utilization, latency, packet loss, MTU, and routing paths",
+          "Replace all network equipment",
+          "Only check DNS resolution"
+        ],
+        "correct_answer": 2,
+        "explanation": "Systematic approach: measure bandwidth (iperf), check latency (ping), packet loss (mtr), MTU size (ping with -M do), routing (traceroute), and network utilization.",
+        "scenario": "Large file transfers between data centers are taking much longer than expected."
+      },
+      {
+        "id": "networking-011",
+        "topic": "networking",
+        "difficulty": "medium",
+        "question": "What is the difference between a switch and a hub?",
+        "options": [
+          "No difference, they're identical",
+          "Switch learns MAC addresses and creates collision domains, hub broadcasts to all ports",
+          "Hub is faster than switch",
+          "Switch only works with wireless connections"
+        ],
+        "correct_answer": 2,
+        "explanation": "Switches learn MAC addresses, create separate collision domains per port, and forward frames only to intended recipients. Hubs broadcast to all ports creating one large collision domain.",
+        "scenario": "You're upgrading legacy network infrastructure and need to explain the benefits of modern switching."
+      },
+      {
+        "id": "networking-012",
+        "topic": "networking",
+        "difficulty": "easy",
+        "question": "What is ingress and egress traffic?",
+        "options": [
+          "Incoming traffic (ingress) and outgoing traffic (egress)",
+          "Only internal network traffic",
+          "Error types in networking",
+          "Different cable types"
+        ],
+        "correct_answer": 1,
+        "explanation": "Ingress refers to traffic entering a network or system, while egress refers to traffic leaving. Important for firewall rules, billing, and security policies."
+      },
+      {
+        "id": "git-009",
+        "topic": "git",
+        "difficulty": "easy",
+        "question": "What is the difference between 'git pull' and 'git fetch'?",
+        "options": [
+          "They do exactly the same thing",
+          "Pull downloads and merges, fetch only downloads",
+          "Fetch is faster than pull",
+          "Pull works offline, fetch needs internet"
+        ],
+        "correct_answer": 2,
+        "explanation": "Git fetch downloads changes from remote repository without merging them. Git pull combines fetch and merge operations in one command.",
+        "scenario": "You want to see what changes are available on the remote branch before integrating them into your local branch."
+      },
+      {
+        "id": "git-010",
+        "topic": "git",
+        "difficulty": "medium",
+        "question": "What is Git stash and when do you use it?",
+        "options": [
+          "Permanent storage for commits",
+          "Temporary storage for uncommitted changes when switching branches",
+          "Backup of the entire repository",
+          "Version control for binary files"
+        ],
+        "correct_answer": 2,
+        "explanation": "Git stash temporarily saves uncommitted changes, allowing you to switch branches or pull updates, then reapply the changes later with 'git stash pop'.",
+        "scenario": "You're working on a feature but need to quickly switch branches to fix a bug without committing incomplete work."
+      },
+      {
+        "id": "git-011",
+        "topic": "git",
+        "difficulty": "hard",
+        "question": "How do you undo a git rebase?",
+        "options": [
+          "It's impossible to undo a rebase",
+          "Use git reflog to find pre-rebase commit and reset to it",
+          "Delete the repository and clone again",
+          "Use git reverse"
+        ],
+        "correct_answer": 2,
+        "explanation": "Use 'git reflog' to find the commit hash before the rebase, then 'git reset --hard <hash>' to return to the pre-rebase state. Reflog tracks HEAD movements.",
+        "scenario": "You performed an interactive rebase that went wrong and need to restore the branch to its previous state."
+      },
+      {
+        "id": "terraform-009",
+        "topic": "terraform",
+        "difficulty": "medium",
+        "question": "What is Terragrunt and why would you use it?",
+        "options": [
+          "A replacement for Terraform",
+          "A wrapper that provides extra tools for working with Terraform",
+          "A cloud provider like AWS",
+          "A monitoring tool for infrastructure"
+        ],
+        "correct_answer": 2,
+        "explanation": "Terragrunt is a thin wrapper around Terraform that provides extra tools for keeping configurations DRY, managing remote state, and working with multiple environments.",
+        "scenario": "You have multiple environments with similar Terraform configurations and want to reduce code duplication."
+      },
+      {
+        "id": "terraform-010",
+        "topic": "terraform",
+        "difficulty": "hard",
+        "question": "How does Terraform state file locking work?",
+        "options": [
+          "State files are never locked",
+          "Prevents concurrent operations by acquiring locks on remote state storage",
+          "Only works with local state files",
+          "Locking is only for read operations"
+        ],
+        "correct_answer": 2,
+        "explanation": "Terraform uses state locking to prevent concurrent operations that could corrupt the state. Remote backends like S3 with DynamoDB provide distributed locking mechanisms.",
+        "scenario": "Multiple team members are working on the same infrastructure and you need to prevent conflicting changes."
+      },
+      {
+        "id": "terraform-011",
+        "topic": "terraform",
+        "difficulty": "medium",
+        "question": "What is a null resource in Terraform?",
+        "options": [
+          "A resource that doesn't exist",
+          "A resource that does nothing but can trigger provisioners or local-exec",
+          "A deleted resource",
+          "An error in Terraform configuration"
+        ],
+        "correct_answer": 2,
+        "explanation": "The null_resource doesn't create actual infrastructure but can run provisioners, execute local commands, or create dependencies between resources.",
+        "scenario": "You need to run a script after creating infrastructure but don't have a specific resource to attach it to."
+      },
+      {
+        "id": "cicd-010",
+        "topic": "cicd",
+        "difficulty": "medium",
+        "question": "What is a rolling deployment?",
+        "options": [
+          "Deploying at specific times only",
+          "Gradually replacing instances with new versions while maintaining service availability",
+          "Rolling back failed deployments",
+          "Deploying to multiple environments simultaneously"
+        ],
+        "correct_answer": 2,
+        "explanation": "Rolling deployment gradually replaces old instances with new ones, maintaining service availability throughout the process. Only a subset of instances are updated at a time.",
+        "scenario": "You need to update your application without any downtime while maintaining capacity."
+      },
+      {
+        "id": "cicd-011",
+        "topic": "cicd",
+        "difficulty": "hard",
+        "question": "How would you implement feature flags in a CI/CD pipeline?",
+        "options": [
+          "Feature flags aren't related to CI/CD",
+          "Deploy code with flags off, enable via configuration management",
+          "Only use feature flags in development",
+          "Feature flags replace the need for CI/CD"
+        ],
+        "correct_answer": 2,
+        "explanation": "Deploy code with feature flags disabled by default, then use configuration management or feature flag services to enable features gradually without new deployments.",
+        "scenario": "You want to deploy new features to production but control their release to users independently of code deployment."
+      },
+      {
+        "id": "security-004",
+        "topic": "security",
+        "difficulty": "medium",
+        "question": "What is the difference between authentication and authorization?",
+        "options": [
+          "They are the same concept",
+          "Authentication verifies identity, authorization determines permissions",
+          "Authorization happens before authentication",
+          "Authentication is only for users, authorization is for systems"
+        ],
+        "correct_answer": 2,
+        "explanation": "Authentication verifies 'who you are' (identity verification), while authorization determines 'what you can do' (permission checking) after authentication is successful.",
+        "scenario": "You're designing access controls for a multi-tenant application."
+      },
+      {
+        "id": "security-005",
+        "topic": "security",
+        "difficulty": "hard",
+        "question": "How do you implement zero-trust security in a microservices architecture?",
+        "options": [
+          "Trust all internal network traffic",
+          "Verify every request with mTLS, service mesh, and fine-grained policies",
+          "Only secure external APIs",
+          "Use VPNs for all connections"
+        ],
+        "correct_answer": 2,
+        "explanation": "Zero-trust requires verifying every request: implement mTLS for service-to-service communication, use service mesh for policy enforcement, and apply principle of least privilege.",
+        "scenario": "You need to secure a microservices architecture where services can't trust the network or other services by default."
+      },
+      {
+        "id": "monitoring-004",
+        "topic": "monitoring",
+        "difficulty": "medium",
+        "question": "What is the difference between SLI, SLO, and SLA?",
+        "options": [
+          "They are all the same thing",
+          "SLI measures service level, SLO sets objectives, SLA is customer agreement",
+          "Only SLA is important for business",
+          "SLI and SLO are only for internal use"
+        ],
+        "correct_answer": 2,
+        "explanation": "SLI (Service Level Indicator) measures actual performance, SLO (Service Level Objective) defines target reliability, SLA (Service Level Agreement) is the customer-facing commitment.",
+        "scenario": "You're defining reliability targets for a customer-facing API service."
+      },
+      {
+        "id": "monitoring-005",
+        "topic": "monitoring",
+        "difficulty": "hard",
+        "question": "How do you monitor a serverless application effectively?",
+        "options": [
+          "Traditional server monitoring tools work fine",
+          "Use distributed tracing, function-level metrics, and log aggregation",
+          "Monitoring isn't needed for serverless",
+          "Only monitor the cloud provider's metrics"
+        ],
+        "correct_answer": 2,
+        "explanation": "Serverless monitoring requires distributed tracing for request flows, function-level metrics (duration, errors, throttles), and centralized logging since you can't access underlying infrastructure.",
+        "scenario": "Your Lambda-based application has intermittent performance issues that are difficult to diagnose."
+      },
+      {
+        "id": "ansible-004",
+        "topic": "ansible",
+        "difficulty": "medium",
+        "question": "What are Ansible handlers?",
+        "options": [
+          "Error handling mechanisms",
+          "Tasks that run only when notified by other tasks",
+          "Connection managers",
+          "Backup procedures"
+        ],
+        "correct_answer": 2,
+        "explanation": "Handlers are special tasks that only run when notified by other tasks, typically used for service restarts or configuration reloads when changes occur.",
+        "scenario": "You want to restart a web server only if its configuration file was changed during playbook execution."
+      },
+      {
+        "id": "ansible-005",
+        "topic": "ansible",
+        "difficulty": "hard",
+        "question": "How do you test your Ansible roles and tasks?",
+        "options": [
+          "Testing isn't necessary for Ansible",
+          "Use Molecule for testing roles with various scenarios and platforms",
+          "Only test in production",
+          "Manual testing is sufficient"
+        ],
+        "correct_answer": 2,
+        "explanation": "Molecule provides testing framework for Ansible roles, allowing you to test against different platforms, scenarios, and configurations using Docker, VMs, or cloud instances.",
+        "scenario": "You're developing reusable Ansible roles and need to ensure they work across different operating systems and configurations."
+      },
+      {
+        "id": "azure-004",
+        "topic": "azure",
+        "difficulty": "medium",
+        "question": "What is Azure CDN and when would you use it?",
+        "options": [
+          "A database service",
+          "Content Delivery Network for caching static content globally",
+          "A monitoring service",
+          "A container orchestration platform"
+        ],
+        "correct_answer": 2,
+        "explanation": "Azure CDN caches static content at edge locations worldwide, reducing latency and bandwidth costs while improving user experience for global applications.",
+        "scenario": "Your web application serves users globally and you need to improve page load times for static assets."
+      },
+      {
+        "id": "azure-005",
+        "topic": "azure",
+        "difficulty": "hard",
+        "question": "What's the difference between Azure SQL Database and Azure SQL Managed Instance?",
+        "options": [
+          "They are identical services",
+          "SQL Database is PaaS with limited features, Managed Instance provides near-complete SQL Server compatibility",
+          "Managed Instance is cheaper than SQL Database",
+          "SQL Database only works with .NET applications"
+        ],
+        "correct_answer": 2,
+        "explanation": "Azure SQL Database is a fully managed PaaS with some limitations, while SQL Managed Instance provides near 100% SQL Server compatibility with features like cross-database queries and SQL Agent.",
+        "scenario": "You're migrating a complex on-premises SQL Server application that uses advanced features like linked servers and SQL Agent jobs."
+      }
+    ]
+}

@@ -1,136 +1,169 @@
-# Get version from git tag, fallback to commit hash if no tag
+# DevOps Interview Prep - Development Makefile
+.DEFAULT_GOAL := help
+
+# Configuration
+PYTHON := python3
+PIP := pip
+PACKAGE_NAME := devops_ip
 VERSION := $(shell git describe --tags --always --dirty 2>/dev/null || echo "dev")
 IMAGE_NAME := moabukar/devops-interview-prep
 
-.PHONY: help install dev test clean docker-setup docker-build-multi docker-build-local docker-test docker-run docker-push docker-pull
+# Colors for output
+BLUE := \033[36m
+GREEN := \033[32m
+YELLOW := \033[33m
+RED := \033[31m
+RESET := \033[0m
 
-help:
-	@echo "DevOps Interview Prep CLI - Available commands:"
-	@echo ""
-	@echo "Development:"
-	@echo "  install          Install the package"
-	@echo "  dev              Install in development mode"
-	@echo "  test             Run tests"
-	@echo "  clean            Clean build artifacts"
-	@echo ""
-	@echo "Docker (Local):"
-	@echo "  docker-build-local   Build Docker image for current platform"
-	@echo "  docker-run           Run Docker container"
-	@echo "  docker-test          Test Docker image"
-	@echo ""
-	@echo "Docker (Production):"
-	@echo "  docker-setup         Setup buildx for multi-platform builds"
-	@echo "  docker-build-multi   Build for multiple platforms and push (auto-versioned)"
-	@echo "  docker-pull          Pull from Docker Hub"
-	@echo ""
-	@echo "Current version: $(VERSION)"
-	@echo ""
-	@echo "Usage examples:"
-	@echo "  make dev && devops-ip practice aws"
-	@echo "  git tag v1.0.3 && make docker-build-multi  # Build with version tag"
-	@echo "  docker run -it --rm $(IMAGE_NAME) practice aws"
+.PHONY: help setup install install-dev clean test test-cov lint format type-check
+.PHONY: docker-build docker-test docker-push docker-clean
+.PHONY: validate-questions add-question release
 
-install:
-	pip install -r requirements.txt
-	pip install .
+help: ## Show this help message
+	@echo "$(BLUE)DevOps Interview Prep - Development Commands$(RESET)"
+	@echo ""
+	@grep -E '^[a-zA-Z_-]+:.*?## .*$$' $(MAKEFILE_LIST) | sort | awk 'BEGIN {FS = ":.*?## "}; {printf "$(GREEN)%-20s$(RESET) %s\n", $$1, $$2}'
 
-dev:
-	pip install -r requirements.txt
-	pip install -e .
+## Development Setup
+setup: clean install-dev install-pre-commit ## Complete development setup
+	@echo "$(GREEN)✓ Development environment ready!$(RESET)"
+	@echo "Try: $(BLUE)make test$(RESET) or $(BLUE)devops-ip practice aws$(RESET)"
 
-test:
-	python -m pytest tests/ -v
+install: ## Install package in production mode
+	$(PIP) install .
 
-clean:
+install-dev: ## Install package in development mode with dev dependencies
+	$(PIP) install -e ".[dev]"
+
+install-pre-commit: ## Install pre-commit hooks
+	pre-commit install
+
+## Code Quality
+lint: ## Run all linters
+	@echo "$(BLUE)Running flake8...$(RESET)"
+	flake8 $(PACKAGE_NAME) tests
+	@echo "$(BLUE)Running mypy...$(RESET)"
+	mypy $(PACKAGE_NAME)
+
+format: ## Format code with black and isort
+	@echo "$(BLUE)Formatting with black...$(RESET)"
+	black $(PACKAGE_NAME) tests
+	@echo "$(BLUE)Sorting imports with isort...$(RESET)"
+	isort $(PACKAGE_NAME) tests
+
+type-check: ## Run type checking with mypy
+	mypy $(PACKAGE_NAME)
+
+check: lint test ## Run all checks (lint + test)
+
+## Testing
+test: ## Run tests
+	pytest tests/ -v
+
+test-cov: ## Run tests with coverage report
+	pytest tests/ -v --cov=$(PACKAGE_NAME) --cov-report=html --cov-report=term-missing
+
+test-fast: ## Run tests without slow tests
+	pytest tests/ -v -m "not slow"
+
+## Question Management
+validate-questions: ## Validate question JSON format and content
+	$(PYTHON) scripts/validate_questions.py
+
+add-question: ## Interactive script to add a new question
+	$(PYTHON) scripts/add_question.py
+
+question-stats: ## Show question bank statistics
+	$(PYTHON) scripts/question_stats.py
+
+## Docker Operations
+docker-build: ## Build Docker image
+	@echo "$(BLUE)Building Docker image $(IMAGE_NAME):$(VERSION)...$(RESET)"
+	docker build -t $(IMAGE_NAME):$(VERSION) -t $(IMAGE_NAME):latest .
+
+docker-test: ## Test Docker image
+	@echo "$(BLUE)Testing Docker image...$(RESET)"
+	docker run --rm $(IMAGE_NAME):latest --help
+	docker run --rm $(IMAGE_NAME):latest topics
+	docker run --rm $(IMAGE_NAME):latest stats
+
+docker-push: docker-build ## Build and push Docker image to registry
+	@echo "$(BLUE)Pushing Docker image...$(RESET)"
+	docker push $(IMAGE_NAME):latest
+	docker push $(IMAGE_NAME):$(VERSION)
+
+docker-clean: ## Clean Docker images and containers
+	@echo "$(BLUE)Cleaning Docker images...$(RESET)"
+	docker system prune -f
+	docker rmi $(IMAGE_NAME):latest $(IMAGE_NAME):$(VERSION) 2>/dev/null || true
+
+## Utility
+clean: ## Clean build artifacts and cache files
+	@echo "$(BLUE)Cleaning build artifacts...$(RESET)"
 	rm -rf build/
 	rm -rf dist/
 	rm -rf *.egg-info/
+	rm -rf .pytest_cache/
+	rm -rf .coverage
+	rm -rf htmlcov/
+	rm -rf .mypy_cache/
 	find . -type d -name __pycache__ -delete
 	find . -type f -name "*.pyc" -delete
 
-# Setup buildx for multi-platform builds
-docker-setup:
-	docker buildx create --name multiplatform --use || true
-	docker buildx inspect --bootstrap
+version: ## Show current version
+	@echo "Version: $(VERSION)"
 
-# Build for multiple platforms and push with automatic versioning
-docker-build-multi:
-	@echo "Building $(IMAGE_NAME) with version: $(VERSION)"
-	docker buildx build \
-		--platform linux/amd64,linux/arm64 \
-		-t $(IMAGE_NAME):latest \
-		-t $(IMAGE_NAME):$(VERSION) \
-		--push .
-	@echo "✅ Built and pushed:"
-	@echo "   $(IMAGE_NAME):latest"
-	@echo "   $(IMAGE_NAME):$(VERSION)"
+install-tools: ## Install development tools globally
+	$(PIP) install black isort flake8 mypy pytest pre-commit
 
-# Build for local platform only
-docker-build-local:
-	@echo "Building $(IMAGE_NAME):$(VERSION) locally"
-	docker build -t $(IMAGE_NAME):$(VERSION) -t $(IMAGE_NAME):latest .
+## Release Management
+changelog: ## Generate changelog (requires git-cliff)
+	@if command -v git-cliff >/dev/null 2>&1; then \
+		git-cliff -o CHANGELOG.md; \
+		echo "$(GREEN)✓ Changelog updated$(RESET)"; \
+	else \
+		echo "$(YELLOW)⚠ git-cliff not installed. Install with: cargo install git-cliff$(RESET)"; \
+	fi
 
-# Test the image
-docker-test:
-	@echo "Testing $(IMAGE_NAME):$(VERSION)"
-	docker run --rm $(IMAGE_NAME):$(VERSION) --help
-	docker run --rm $(IMAGE_NAME):$(VERSION) topics
-	docker run --rm $(IMAGE_NAME):$(VERSION) stats
+release: check validate-questions ## Prepare release (run checks, validate questions)
+	@echo "$(GREEN)✓ All checks passed. Ready for release!$(RESET)"
+	@echo "Next steps:"
+	@echo "  1. Update version in pyproject.toml"
+	@echo "  2. git tag v<version>"
+	@echo "  3. git push origin v<version>"
 
-# Run interactive container
-docker-run:
-	docker run -it --rm $(IMAGE_NAME):$(VERSION)
+## Demo and Examples
+demo: ## Run a quick demo
+	@echo "$(BLUE)Running DevOps Interview Prep demo...$(RESET)"
+	@echo "2" | devops-ip practice aws --count 1 || echo "$(YELLOW)Install with 'make install-dev' first$(RESET)"
 
-docker-pull:
-	docker pull $(IMAGE_NAME):latest
+example-docker: ## Show Docker usage examples
+	@echo "$(BLUE)Docker Usage Examples:$(RESET)"
+	@echo "  docker run -it --rm $(IMAGE_NAME) practice aws"
+	@echo "  docker run -it --rm $(IMAGE_NAME) interview --count 10"
+	@echo "  docker run --rm $(IMAGE_NAME) topics"
 
-# Show current version
-version:
-	@echo "Current version: $(VERSION)"
-	@echo "Image tags that will be created:"
-	@echo "  $(IMAGE_NAME):latest"
-	@echo "  $(IMAGE_NAME):$(VERSION)"
+## Development Workflow
+dev: install-dev ## Quick development setup
+	@echo "$(GREEN)✓ Development mode installed$(RESET)"
 
-# Build and tag a release (use after creating git tag)
-release: docker-build-multi
-	@echo "🚀 Release $(VERSION) complete!"
-	@echo "Users can now run:"
-	@echo "  docker run -it --rm $(IMAGE_NAME):$(VERSION) practice aws"
-	@echo "  docker run -it --rm $(IMAGE_NAME):latest practice aws"
+ci: lint test validate-questions ## Run CI pipeline locally
+	@echo "$(GREEN)✓ All CI checks passed$(RESET)"
 
-# Quick development workflow
-docker-dev: docker-build-local docker-test
+## Debugging
+debug-env: ## Show development environment info
+	@echo "$(BLUE)Development Environment$(RESET)"
+	@echo "Python: $(shell $(PYTHON) --version)"
+	@echo "Pip: $(shell $(PIP) --version)"
+	@echo "Git: $(shell git --version)"
+	@echo "Working directory: $(shell pwd)"
+	@echo "Git branch: $(shell git branch --show-current 2>/dev/null || echo 'Not a git repo')"
+	@echo "Git status:"
+	@git status --porcelain 2>/dev/null || echo "Not a git repository"
 
-# Production deployment
-docker-prod: docker-build-multi
-	@echo "✅ Multi-platform image built and pushed!"
-	@echo "🚀 Users can now run: docker run -it --rm $(IMAGE_NAME) practice aws"
-
-# Quick development setup
-setup: dev
-	@echo "✅ Setup complete! Try: devops-ip practice aws"
-
-# Run a sample interview
-demo:
-	devops-ip practice aws --count 3 --interview-mode
-
-# Show available topics
-topics:
-	devops-ip topics
-
-# Test what files are included in Docker build context
-docker-debug:
-	@echo "Files that will be sent to Docker build context:"
-	@echo "================================================"
-	@tar -czf - . --exclude-from=.dockerignore | tar -tzf - | head -20
-	@echo "..."
-	@echo "================================================"
-	@echo "Checking for essential files:"
-	@echo -n "setup.py: "
-	@if tar -czf - . --exclude-from=.dockerignore | tar -tzf - | grep -q "setup.py"; then echo "✅ INCLUDED"; else echo "❌ EXCLUDED"; fi
-	@echo -n "requirements.txt: "
-	@if tar -czf - . --exclude-from=.dockerignore | tar -tzf - | grep -q "requirements.txt"; then echo "✅ INCLUDED"; else echo "❌ EXCLUDED"; fi
-	@echo -n "devops_ip/: "
-	@if tar -czf - . --exclude-from=.dockerignore | tar -tzf - | grep -q "devops_ip/"; then echo "✅ INCLUDED"; else echo "❌ EXCLUDED"; fi
-	@echo -n "questions/: "
-	@if tar -czf - . --exclude-from=.dockerignore | tar -tzf - | grep -q "questions/"; then echo "✅ INCLUDED"; else echo "❌ EXCLUDED"; fi
+# Safety checks
+guard-%:
+	@if [ "${${*}}" = "" ]; then \
+		echo "$(RED)Error: Variable $* is not set$(RESET)"; \
+		exit 1; \
+	fi
