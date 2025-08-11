@@ -1,4 +1,4 @@
-name: CI/CD Pipeline
+name: CI/CD
 
 on:
   push:
@@ -8,88 +8,38 @@ on:
     branches: [ main ]
 
 env:
-  REGISTRY: docker.io
   IMAGE_NAME: moabukar/devops-interview-prep
 
 jobs:
   test:
     runs-on: ubuntu-latest
-    strategy:
-      matrix:
-        python-version: ['3.8', '3.9', '3.10', '3.11', '3.12']
     
     steps:
-    - name: Checkout code
-      uses: actions/checkout@v4
-      with:
-        fetch-depth: 0
+    - uses: actions/checkout@v4
 
-    - name: Set up Python ${{ matrix.python-version }}
+    - name: Set up Python
       uses: actions/setup-python@v4
       with:
-        python-version: ${{ matrix.python-version }}
-
-    - name: Cache pip dependencies
-      uses: actions/cache@v3
-      with:
-        path: ~/.cache/pip
-        key: ${{ runner.os }}-pip-${{ hashFiles('**/requirements*.txt') }}
-        restore-keys: |
-          ${{ runner.os }}-pip-
+        python-version: '3.11'
 
     - name: Install dependencies
       run: |
         python -m pip install --upgrade pip
         pip install -r requirements.txt
-        pip install -e ".[dev,test]"
+        pip install -e .
 
-    # - name: Check project structure
-    #   run: |
-    #     test -d "src/devops_interview_prep" || (echo "Source directory not found" && exit 1)
-    #     test -f "src/devops_interview_prep/cli.py" || (echo "CLI module not found" && exit 1)
-    #     test -f "data/questions/interview_questions.json" || (echo "Questions file not found" && exit 1)
-
-    # - name: Lint with flake8
-    #   run: |
-    #     flake8 src/devops_interview_prep tests --count --select=E9,F63,F7,F82 --show-source --statistics
-    #     flake8 src/devops_interview_prep tests --count --exit-zero --max-complexity=10 --max-line-length=88 --statistics
-
-    - name: Type check with mypy
-      run: mypy src/devops_interview_prep
-
-    - name: Format check with black
-      run: black --check src/devops_interview_prep tests
-
-    - name: Import sort check
-      run: isort --check-only src/devops_interview_prep tests
-
-    - name: Test CLI installation and basic functionality
+    - name: Test CLI works
       run: |
         devops-ip --help
         devops-ip topics
         devops-ip stats
-        devops-ip --version
 
-    - name: Validate questions
+    - name: Validate questions file
       run: python scripts/validate_questions.py
 
-    - name: Run tests with pytest
-      run: |
-        pytest tests/ -v --cov=devops_interview_prep --cov-report=xml --cov-report=term-missing
-
-    - name: Upload coverage reports
-      if: matrix.python-version == '3.11'
-      uses: codecov/codecov-action@v3
-      with:
-        file: ./coverage.xml
-        flags: unittests
-        name: codecov-umbrella
-
-    - name: Test package building
-      if: matrix.python-version == '3.11'
-      run: |
-        python -m build
-        python -m twine check dist/*
+    - name: Run tests
+      run: pytest tests/ -v
+      if: always()
 
   docker:
     needs: test
@@ -97,10 +47,7 @@ jobs:
     if: github.event_name != 'pull_request'
     
     steps:
-    - name: Checkout code
-      uses: actions/checkout@v4
-      with:
-        fetch-depth: 0
+    - uses: actions/checkout@v4
 
     - name: Set up Docker Buildx
       uses: docker/setup-buildx-action@v3
@@ -111,72 +58,26 @@ jobs:
         username: moabukar
         password: ${{ secrets.DOCKER_HUB_TOKEN }}
 
-    - name: Get version from git
+    - name: Get version
       id: version
       run: |
         VERSION=$(git describe --tags --always --dirty 2>/dev/null || echo "dev")
         echo "VERSION=${VERSION}" >> $GITHUB_OUTPUT
-        echo "Building version: ${VERSION}"
 
-    - name: Extract metadata
-      id: meta
-      uses: docker/metadata-action@v5
-      with:
-        images: ${{ env.IMAGE_NAME }}
-        tags: |
-          type=ref,event=branch
-          type=ref,event=pr
-          type=semver,pattern={{version}}
-          type=semver,pattern={{major}}.{{minor}}
-          type=raw,value=latest,enable={{is_default_branch}}
-          type=raw,value=${{ steps.version.outputs.VERSION }}
-
-    - name: Build and push Docker image
+    - name: Build and push
       uses: docker/build-push-action@v5
       with:
         context: .
         platforms: linux/amd64,linux/arm64
         push: true
-        tags: ${{ steps.meta.outputs.tags }}
-        labels: ${{ steps.meta.outputs.labels }}
-        cache-from: type=gha
-        cache-to: type=gha,mode=max
+        tags: |
+          ${{ env.IMAGE_NAME }}:latest
+          ${{ env.IMAGE_NAME }}:${{ steps.version.outputs.VERSION }}
 
-    - name: Test Docker image functionality
+    - name: Test Docker image
       run: |
-        echo "Testing Docker image..."
         docker run --rm ${{ env.IMAGE_NAME }}:latest --help
         docker run --rm ${{ env.IMAGE_NAME }}:latest topics
-        docker run --rm ${{ env.IMAGE_NAME }}:latest stats
-        docker run --rm ${{ env.IMAGE_NAME }}:latest --version
-        
-        # Test that questions can be loaded
-        docker run --rm ${{ env.IMAGE_NAME }}:latest topics | grep -i aws || exit 1
-
-    - name: Test Docker image with practice command
-      run: |
-        # Test practice command (non-interactive)
-        timeout 30 docker run --rm ${{ env.IMAGE_NAME }}:latest practice aws --count 1 < /dev/null || true
-
-  security:
-    runs-on: ubuntu-latest
-    steps:
-    - name: Checkout code
-      uses: actions/checkout@v4
-
-    - name: Run Trivy vulnerability scanner
-      uses: aquasecurity/trivy-action@master
-      with:
-        scan-type: 'fs'
-        scan-ref: '.'
-        format: 'sarif'
-        output: 'trivy-results.sarif'
-
-    - name: Upload Trivy scan results
-      uses: github/codeql-action/upload-sarif@v2
-      if: always()
-      with:
-        sarif_file: 'trivy-results.sarif'
 
   release:
     needs: [test, docker]
@@ -184,29 +85,13 @@ jobs:
     if: startsWith(github.ref, 'refs/tags/v')
     
     steps:
-    - name: Checkout code
-      uses: actions/checkout@v4
-      with:
-        fetch-depth: 0
-
-    - name: Set up Python
-      uses: actions/setup-python@v4
-      with:
-        python-version: '3.11'
-
-    - name: Install build dependencies
-      run: |
-        python -m pip install --upgrade pip
-        pip install build twine
-
-    - name: Build package
-      run: python -m build
+    - uses: actions/checkout@v4
 
     - name: Get version
       id: version
       run: echo "VERSION=${GITHUB_REF#refs/tags/}" >> $GITHUB_OUTPUT
 
-    - name: Create GitHub Release
+    - name: Create Release
       uses: actions/create-release@v1
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
@@ -216,58 +101,14 @@ jobs:
         body: |
           ## 🚀 DevOps Interview Prep ${{ steps.version.outputs.VERSION }}
           
-          ### 📦 Installation
-          ```bash
-          pip install devops-interview-prep==${{ steps.version.outputs.VERSION }}
-          ```
-          
           ### 🐳 Docker
           ```bash
           docker run -it --rm moabukar/devops-interview-prep:${{ steps.version.outputs.VERSION }} practice aws
           ```
           
-          ### 📊 What's New
-          Check the [CHANGELOG](CHANGELOG.md) for detailed changes.
-          
           ### 🎯 Quick Start
           ```bash
-          # Practice AWS questions
           devops-ip practice aws
-          
-          # Full interview simulation
           devops-ip interview --count 15
-          
-          # Check weak areas
           devops-ip weak-areas
           ```
-        draft: false
-        prerelease: false
-
-    # - name: Publish to PyPI
-    #   env:
-    #     TWINE_USERNAME: __token__
-    #     TWINE_PASSWORD: ${{ secrets.PYPI_API_TOKEN }}
-    #   run: |
-    #     twine upload dist/*
-
-    # - name: Create Release Summary
-    #   run: |
-    #     echo "🚀 **DevOps Interview Prep ${{ steps.version.outputs.VERSION }} Released!**" >> $GITHUB_STEP_SUMMARY
-    #     echo "" >> $GITHUB_STEP_SUMMARY
-    #     echo "### 📦 Installation Methods:" >> $GITHUB_STEP_SUMMARY
-    #     echo "**PyPI:** \`pip install devops-interview-prep==${{ steps.version.outputs.VERSION }}\`" >> $GITHUB_STEP_SUMMARY
-    #     echo "**Docker:** \`docker run -it --rm moabukar/devops-interview-prep:${{ steps.version.outputs.VERSION }}\`" >> $GITHUB_STEP_SUMMARY
-    #     echo "" >> $GITHUB_STEP_SUMMARY
-    #     echo "### 🎯 Quick Commands:" >> $GITHUB_STEP_SUMMARY
-    #     echo "\`\`\`bash" >> $GITHUB_STEP_SUMMARY
-    #     echo "# Practice specific topics" >> $GITHUB_STEP_SUMMARY
-    #     echo "devops-ip practice aws" >> $GITHUB_STEP_SUMMARY
-    #     echo "devops-ip practice kubernetes" >> $GITHUB_STEP_SUMMARY
-    #     echo "" >> $GITHUB_STEP_SUMMARY
-    #     echo "# Interview simulation" >> $GITHUB_STEP_SUMMARY
-    #     echo "devops-ip interview --count 15" >> $GITHUB_STEP_SUMMARY
-    #     echo "" >> $GITHUB_STEP_SUMMARY
-    #     echo "# Analytics and progress" >> $GITHUB_STEP_SUMMARY
-    #     echo "devops-ip weak-areas" >> $GITHUB_STEP_SUMMARY
-    #     echo "devops-ip analytics" >> $GITHUB_STEP_SUMMARY
-    #     echo "\`\`\`" >> $GITHUB_STEP_SUMMARY

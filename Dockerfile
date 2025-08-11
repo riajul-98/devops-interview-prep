@@ -21,18 +21,20 @@ RUN apt-get update && apt-get install -y \
     && rm -rf /var/lib/apt/lists/* \
     && apt-get clean
 
+# create non-root user early
 RUN useradd --create-home --shell /bin/bash --uid 1000 devops-interviewer
 
-# copy requirements first for better Docker layer caching
-COPY requirements.txt requirements-dev.txt ./
+# copy only the requirements file that exists
+COPY requirements.txt ./
 
 RUN pip install --no-cache-dir --upgrade pip && \
     pip install --no-cache-dir -r requirements.txt
 
 COPY src/ src/
 COPY data/ data/
-COPY pyproject.toml setup.py MANIFEST.in ./
-COPY README.md LICENSE CONTRIBUTING.md ./
+COPY pyproject.toml ./
+COPY setup.py ./
+
 
 RUN pip install --no-cache-dir -e .
 
