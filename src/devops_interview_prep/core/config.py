@@ -7,8 +7,8 @@ from pathlib import Path
 APP_NAME = "DevOps Interview Prep"
 VERSION = "1.1.0"
 
-# File paths
-DEFAULT_QUESTIONS_FILE = "data/questions/interview_questions.json"
+# File paths - Use absolute path for container
+DEFAULT_QUESTIONS_FILE = "/app/data/questions/interview_questions.json"
 PROGRESS_DIR = Path.home() / ".devops-ip"
 PROGRESS_FILE = PROGRESS_DIR / "progress.json"
 
