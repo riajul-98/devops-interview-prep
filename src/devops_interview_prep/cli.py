@@ -14,7 +14,10 @@ from .commands.interview import interview
 from .commands.info import stats, topics, quick
 
 
-@click.group()
+@click.group(context_settings=dict(
+        ignore_unknown_options=True,
+        allow_extra_args=True
+))
 @click.version_option(version=VERSION)
 @click.option("--verbose", is_flag=True, help="Enable verbose output")
 @click.pass_context
